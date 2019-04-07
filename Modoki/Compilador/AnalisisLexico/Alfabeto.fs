@@ -1,0 +1,51 @@
+module Alfabeto
+
+let letra = "[A-ZÑÁÓÉÚÍÄÖËÜÏÀÒÈÙÌa-zñáóéúíäöëüïàòèì]"
+let minuscula = "[a-zñáóéúíäöëüïàòèì]"
+let mayuscula = "[A-ZÑÁÓÉÚÍÄÖËÜÏÀÒÈÙÌ]"
+let numero = "[0-9]"
+let guionBajo = "_"
+let nuevaLinea = "\\n"
+let espacioBlanco = "\\s"
+
+let tilde = "´"
+let tildeInvertida = "`"
+let comilla = "'"
+let comillaDoble = "\""
+
+(* 31 operadores *)
+let guion = "-"
+let igual = "="
+let menorQue = "<"
+let mayorQue = ">"
+let parentesisAbierto = "\\("
+let parentesisCerrado = "\\)"
+let corcheteAbierto = "\\["
+let corcheteCerrado = "\\]"
+let llaveAbierta = "{"
+let llaveCerrada = "}"
+let asterisco = "\\*"
+let suma = "\\+"
+let barra = "\\/"
+let porcentaje = "%"
+let acento = "\\^"
+let mi_or = "\\|"
+let exclamacionAbierto = "¡"
+let exclamacionCerrado = "!"
+let interrogacionAbierto = "¿"
+let interrogacionCerrado = "\\?"
+let dosPuntos = "[:]"
+let punto = "\\."
+let puntoYComa = ";"
+let coma = ","
+let arroba = "@"
+let hash = "#"
+let dolar = "[$]"
+let euro = "€"
+let virguilla = "~"
+let puntoMedio = "·"
+let amp = "&"
+
+let operadores = 
+    sprintf "%s|%s|%s|%s|%s|%s|%s|%s|%s|%s|%s|%s|%s|%s|%s|%s|%s|%s|%s|%s|%s|%s|%s|%s|%s|%s|%s|%s|%s|%s|%s" guion igual  menorQue mayorQue parentesisAbierto parentesisCerrado corcheteAbierto corcheteCerrado llaveAbierta llaveCerrada asterisco suma barra porcentaje acento mi_or exclamacionAbierto exclamacionCerrado interrogacionAbierto interrogacionCerrado dosPuntos punto puntoYComa coma arroba hash dolar euro virguilla puntoMedio amp
+    
