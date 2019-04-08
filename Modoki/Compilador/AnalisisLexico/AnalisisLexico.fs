@@ -42,6 +42,7 @@ type Token = {
 }
 
 type fms =
+    | InicioLinea
     | Inicio
     | Identificador
     | Texto
@@ -69,7 +70,7 @@ let detectarToken str =
     | _ -> A_Otros
 
 
-type estadoDeFms = Terminado | Error of string | Continua of string
+type estadoDeFms = Terminado | Error of string | Continua
 
 let obtenerTokens (entrada: string) =
 
@@ -85,7 +86,7 @@ let obtenerTokens (entrada: string) =
     let crearToken valor posInicio posFinal tipo =
         { valor = valor; posInicio = posInicio; posFinal = posFinal; tipo = tipo }
         
-    let rec reconocerToken tokenActual posActual estadoActual valorActual =
+    let rec reconocerToken tokenActual posActual estadoActual =
     
         let aumentarPosCol () = 
             { 
@@ -100,6 +101,20 @@ let obtenerTokens (entrada: string) =
                 fil = posActual.fil + 1
                 posAbs = posActual.posAbs + 1
                 posAbsFil = posActual.posAbs + 1
+            }
+        let aumentarValor token valor =
+            {
+                valor = token.valor + valor.ToString ();
+                posInicio = token.posInicio;
+                posFinal = token.posFinal;
+                tipo = token.tipo
+            }
+        let terminarToken token =
+            {
+                valor = token.valor;
+                posInicio = token.posInicio;
+                posFinal = posActual;
+                tipo = token.tipo
             }
     
         let caracActual = 
@@ -119,7 +134,7 @@ let obtenerTokens (entrada: string) =
                         crearToken "\n" posActual posActual NuevaLinea,
                         Inicio,
                         aumentarPosFil(),
-                        Continua("")
+                        Continua
                     )
                 // Esta cosa tiene que diferenciar espacios al inicio y entre tokens
                 | A_EspacioBlanco ->
@@ -127,50 +142,50 @@ let obtenerTokens (entrada: string) =
                         crearToken " " posActual posActual tipoToken.Identacion,
                         Inicio,
                         aumentarPosCol (),
-                        Continua ""
-                    );
+                        Continua
+                    )
                 | A_Mayuscula -> 
                     (
                         crearToken (caracActual.ToString()) posActual posVacia IdentificadorObj,
                         Identificador,
                         aumentarPosCol (),
-                        Continua ""
-                    );
+                        Continua
+                    )
                 | A_Minuscula | A_GuionBajo -> 
                     (
                         crearToken (caracActual.ToString()) posActual posVacia tipoToken.Identificador, 
                         Identificador, 
                         aumentarPosCol (),
-                        Continua ""
-                    );
+                        Continua
+                    )
                 | A_ComillaDoble -> 
                     (
                         crearToken (caracActual.ToString()) posActual posVacia TextoLiteral, 
                         Texto, 
                         aumentarPosCol (),
-                        Continua ""
+                        Continua
                     );
                 | A_ComillaSimple ->
                     (
                         crearToken (caracActual.ToString()) posActual posVacia CaracterLiteral, 
                         Caracter, 
                         aumentarPosCol (), 
-                        Continua ""
-                    );
+                        Continua
+                    )
                 | A_Numero -> 
                     (
                         crearToken (caracActual.ToString()) posActual posVacia NumeroLiteral, 
                         Numero, 
                         aumentarPosCol (), 
-                        Continua("")
-                    );
+                        Continua
+                    )
                 // Hacerlo más granular haciendo que los operadores sean más específicos?
                 | A_Operador ->
                     (
                         crearToken (caracActual.ToString()) posActual posVacia tipoToken.Operador,
                         Operador,
                         aumentarPosCol (), 
-                        Continua ""
+                        Continua
                     )
                 | A_Otros ->
                     let largoLista = [0..(posActual.posAbs - posActual.posAbsFil)]
@@ -203,23 +218,38 @@ let obtenerTokens (entrada: string) =
                         <| indicadorError
                     
                     (tokenActual, estadoActual, posActual, Error razonError)
-                
+            | Identificador ->
+                match tipoCarac with
+                | A_Mayuscula | A_Minuscula | A_GuionBajo | A_Numero ->
+                    (
+                        aumentarValor tokenActual caracActual,
+                        estadoActual,
+                        aumentarPosCol (),
+                        Continua
+                    )
+                | _ ->
+                    (
+                        terminarToken tokenActual, 
+                        Inicio, 
+                        posActual, 
+                        Terminado
+                    )
             | _ -> (tokenActual, estadoActual, posActual, Terminado)
         
         match estado with 
-        | Terminado -> Some (tokenActual, nuevaPos)
+        | Terminado -> Some (tokenActual, nuevaPos, nuevoEstado)
         | Error razon->
             printf "%s" razon
             None
-        | Continua valorActual -> reconocerToken tokenActual nuevaPos nuevoEstado valorActual
+        | Continua -> reconocerToken tokenActual nuevaPos nuevoEstado
 
-    let rec crearListaTokens tokensActuales posActual =
+    let rec crearListaTokens tokensActuales posActual estadoFSM =
         if posActual.posAbs >= String.length entrada then
             Some tokensActuales
         else
-            let res = reconocerToken tokenVacio posActual Inicio ""
+            let res = reconocerToken tokenVacio posActual estadoFSM
             match res with
-            | Some (nuevoToken, pos) -> crearListaTokens (tokensActuales @ [nuevoToken]) pos
+            | Some (nuevoToken, pos, nuevoEstado) -> crearListaTokens (tokensActuales @ [nuevoToken]) pos nuevoEstado
             | None -> None
-        
-    crearListaTokens [] posVacia
+
+    crearListaTokens [] posVacia Inicio
