@@ -45,8 +45,10 @@ type fms =
     | InicioLinea
     | Inicio
     | Identificador
+    | IdentificadorObj
     | Texto
     | Caracter
+    | Caracter_Final
     | Numero
     | Identacion
     | Operador
@@ -127,27 +129,26 @@ let obtenerTokens (entrada: string) =
         (* Maquina de estado finito *)
         let (tokenActual, nuevoEstado, nuevaPos, estado) =
             match estadoActual with
-            | Inicio ->
+            | InicioLinea ->
                 match tipoCarac with 
                 | A_NuevaLinea ->
                     (
                         crearToken "\n" posActual posActual NuevaLinea,
                         Inicio,
                         aumentarPosFil(),
-                        Continua
+                        Terminado
                     )
-                // Esta cosa tiene que diferenciar espacios al inicio y entre tokens
                 | A_EspacioBlanco ->
                     (
                         crearToken " " posActual posActual tipoToken.Identacion,
-                        Inicio,
+                        Identacion,
                         aumentarPosCol (),
                         Continua
                     )
                 | A_Mayuscula -> 
                     (
-                        crearToken (caracActual.ToString()) posActual posVacia IdentificadorObj,
-                        Identificador,
+                        crearToken (caracActual.ToString()) posActual posVacia tipoToken.IdentificadorObj,
+                        IdentificadorObj,
                         aumentarPosCol (),
                         Continua
                     )
@@ -160,14 +161,15 @@ let obtenerTokens (entrada: string) =
                     )
                 | A_ComillaDoble -> 
                     (
-                        crearToken (caracActual.ToString()) posActual posVacia TextoLiteral, 
+                        crearToken "" posActual posVacia TextoLiteral,
+                        // crearToken (caracActual.ToString()) posActual posVacia TextoLiteral, 
                         Texto, 
                         aumentarPosCol (),
                         Continua
                     );
                 | A_ComillaSimple ->
                     (
-                        crearToken (caracActual.ToString()) posActual posVacia CaracterLiteral, 
+                        crearToken "" posActual posVacia CaracterLiteral, 
                         Caracter, 
                         aumentarPosCol (), 
                         Continua
@@ -179,7 +181,7 @@ let obtenerTokens (entrada: string) =
                         aumentarPosCol (), 
                         Continua
                     )
-                // Hacerlo más granular haciendo que los operadores sean más específicos?
+                // TODO: Hacerlo más granular haciendo que los operadores sean más específicos?
                 | A_Operador ->
                     (
                         crearToken (caracActual.ToString()) posActual posVacia tipoToken.Operador,
@@ -218,9 +220,100 @@ let obtenerTokens (entrada: string) =
                         <| indicadorError
                     
                     (tokenActual, estadoActual, posActual, Error razonError)
-            | Identificador ->
+            | Inicio ->
+                match tipoCarac with 
+                | A_NuevaLinea ->
+                    (
+                        crearToken "\n" posActual posActual NuevaLinea,
+                        InicioLinea,
+                        aumentarPosFil(),
+                        Terminado
+                    )
+                | A_EspacioBlanco ->
+                    (
+                        tokenVacio,
+                        Inicio,
+                        aumentarPosCol (),
+                        Continua
+                    )
+                | A_Mayuscula -> 
+                    (
+                        crearToken (caracActual.ToString()) posActual posVacia tipoToken.IdentificadorObj,
+                        IdentificadorObj,
+                        aumentarPosCol (),
+                        Continua
+                    )
+                | A_Minuscula | A_GuionBajo -> 
+                    (
+                        crearToken (caracActual.ToString()) posActual posVacia tipoToken.Identificador, 
+                        Identificador, 
+                        aumentarPosCol (),
+                        Continua
+                    )
+                | A_ComillaDoble -> 
+                    (
+                        crearToken "" posActual posVacia TextoLiteral,
+                        // crearToken (caracActual.ToString()) posActual posVacia TextoLiteral, 
+                        Texto, 
+                        aumentarPosCol (),
+                        Continua
+                    );
+                | A_ComillaSimple ->
+                    (
+                        crearToken "" posActual posVacia CaracterLiteral, 
+                        Caracter, 
+                        aumentarPosCol (), 
+                        Continua
+                    )
+                | A_Numero -> 
+                    (
+                        crearToken (caracActual.ToString()) posActual posVacia NumeroLiteral, 
+                        Numero, 
+                        aumentarPosCol (), 
+                        Continua
+                    )
+                // TODO: Hacerlo más granular haciendo que los operadores sean más específicos?
+                | A_Operador ->
+                    (
+                        crearToken (caracActual.ToString()) posActual posVacia tipoToken.Operador,
+                        Operador,
+                        aumentarPosCol (), 
+                        Continua
+                    )
+                | A_Otros ->
+                    let largoLista = [0..(posActual.posAbs - posActual.posAbsFil)]
+                    let indicadorError =
+                        let unirLista ls = ls @ ['^']
+                        let res = match largoLista with
+                                  | _::xs -> xs
+                                  | [] -> []
+                        List.map (fun _ -> '_') res
+                        |> unirLista
+                        |> List.toArray
+                        |> System.String
+                        |> sprintf "%s" 
+                        
+                    let textoError = 
+                        largoLista
+                        |> List.mapi (fun pos _ ->
+                            entrada.[posActual.posAbsFil + pos]
+                        )
+                        |> List.toArray
+                        |> System.String
+                        |> sprintf "%s"
+                        
+                    let razonError = 
+                        sprintf "Error al crear los tokens. No se esperaba el caracter %c en la pos. %i,%i :\n%s \n%s \n"
+                        <| caracActual
+                        <| posActual.fil + 1
+                        <| posActual.col + 1
+                        <| textoError
+                        <| indicadorError
+                    
+                    (tokenActual, estadoActual, posActual, Error razonError)
+            | Identificador | IdentificadorObj ->
                 match tipoCarac with
-                | A_Mayuscula | A_Minuscula | A_GuionBajo | A_Numero ->
+                | A_Mayuscula |  A_Minuscula | A_GuionBajo | A_Numero ->
                     (
                         aumentarValor tokenActual caracActual,
                         estadoActual,
@@ -234,7 +327,94 @@ let obtenerTokens (entrada: string) =
                         posActual, 
                         Terminado
                     )
-            | _ -> (tokenActual, estadoActual, posActual, Terminado)
+            // TODO: Agregar soporte para escapar caracteres, e interpolacion.
+            | Texto ->
+                match tipoCarac with 
+                | A_ComillaDoble ->
+                    (
+                        terminarToken tokenActual,
+                        Inicio,
+                        aumentarPosCol (),
+                        Terminado
+                    ) 
+                | _ ->
+                    (
+                        aumentarValor tokenActual caracActual,
+                        estadoActual,
+                        aumentarPosCol (),
+                        Continua
+                    )
+            // TODO: Agregar soporte para escapar caracteres, e UTF-8 escapado (\uXXX)
+            | Caracter ->
+                match tipoCarac with 
+                | A_ComillaSimple ->
+                    ( tokenActual, estadoActual, posActual, Error <| sprintf "Error. El caracter está vacio en %A" posActual )
+                | _ ->
+                    (
+                        aumentarValor tokenActual caracActual,
+                        Caracter_Final,
+                        aumentarPosCol (),
+                        Continua
+                    )
+            | Caracter_Final ->
+                match tipoCarac with 
+                | A_ComillaSimple ->
+                    (
+                        terminarToken tokenActual,
+                        Inicio,
+                        aumentarPosCol (),
+                        Terminado
+                    )
+                | _ -> ( tokenActual, estadoActual, posActual, Error <| sprintf "Error. El caracter tiene más de un caracter %A" posActual )
+            // TODO: Soporte para punto flotante.
+            | Numero ->
+                match tipoCarac with 
+                | A_Numero ->
+                    (
+                        aumentarValor tokenActual caracActual,
+                        estadoActual,
+                        aumentarPosCol (),
+                        Continua
+                    )
+                | _ ->
+                    (
+                        terminarToken tokenActual, 
+                        Inicio, 
+                        posActual, 
+                        Terminado
+                    )
+            | Identacion ->
+                match  tipoCarac with 
+                | A_EspacioBlanco ->
+                    (
+                        aumentarValor tokenActual caracActual,
+                        estadoActual,
+                        aumentarPosCol (),
+                        Continua
+                    )
+                | _ ->
+                    (
+                        terminarToken tokenActual, 
+                        Inicio, 
+                        posActual, 
+                        Terminado
+                    )
+            | Operador ->
+                match tipoCarac with  
+                | A_Operador ->
+                    (
+                        aumentarValor tokenActual caracActual,
+                        estadoActual,
+                        aumentarPosCol (),
+                        Continua
+                    )
+                | _ ->
+                    (
+                        terminarToken tokenActual, 
+                        Inicio, 
+                        posActual, 
+                        Terminado
+                    )
         
         match estado with 
         | Terminado -> Some (tokenActual, nuevaPos, nuevoEstado)
