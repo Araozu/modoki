@@ -14,6 +14,8 @@ type tipoToken =
     | EspacioBlanco
     | Ninguno
     | Identacion
+    | Comentario
+    | ComentarioMult // Son tokens porque al transpilar se conservan las comentarios.
 
 type tipoCaracActual =
     | A_NuevaLinea
@@ -24,6 +26,7 @@ type tipoCaracActual =
     | A_ComillaDoble
     | A_ComillaSimple
     | A_Numero
+    | A_Barra
     | A_Operador
     | A_Otros
 
@@ -52,6 +55,8 @@ type fms =
     | Numero
     | Identacion
     | Operador
+    | PreComentario
+    | Comentario
 
 let detectarToken str =
 
@@ -67,6 +72,7 @@ let detectarToken str =
     | _ when regex str guionBajo -> A_GuionBajo
     | _ when regex str comillaDoble -> A_ComillaDoble
     | _ when regex str comilla -> A_ComillaSimple
+    | _ when regex str barra -> A_Barra
     | _ when regex str operadores -> A_Operador
     | _ when regex str numero -> A_Numero
     | _ -> A_Otros
@@ -119,14 +125,18 @@ let obtenerTokens (entrada: string) =
                 tipo = token.tipo
             }
     
-        let caracActual = 
-            try entrada.[posActual.posAbs]
-            with 
-            | _ -> ' '
+        let caracActual =
+            // Cambiado a revision del largo del str porque... JavaScript... undefined...
+            if posActual.posAbs < entrada.Length then 
+                try entrada.[posActual.posAbs]
+                with 
+                | _ -> ' '
+            else ' '
             
         let tipoCarac = detectarToken <| caracActual.ToString ()
         
         (* Maquina de estado finito *)
+        // TODO: Agregar soporte para comentarios.
         let (tokenActual, nuevoEstado, nuevaPos, estado) =
             match estadoActual with
             | InicioLinea ->
@@ -134,7 +144,7 @@ let obtenerTokens (entrada: string) =
                 | A_NuevaLinea ->
                     (
                         crearToken "\n" posActual posActual NuevaLinea,
-                        Inicio,
+                        InicioLinea,
                         aumentarPosFil(),
                         Terminado
                     )
@@ -161,15 +171,14 @@ let obtenerTokens (entrada: string) =
                     )
                 | A_ComillaDoble -> 
                     (
-                        crearToken "" posActual posVacia TextoLiteral,
-                        // crearToken (caracActual.ToString()) posActual posVacia TextoLiteral, 
+                        crearToken "\"" posActual posVacia TextoLiteral, 
                         Texto, 
                         aumentarPosCol (),
                         Continua
                     );
                 | A_ComillaSimple ->
                     (
-                        crearToken "" posActual posVacia CaracterLiteral, 
+                        crearToken "'" posActual posVacia CaracterLiteral, 
                         Caracter, 
                         aumentarPosCol (), 
                         Continua
@@ -179,6 +188,13 @@ let obtenerTokens (entrada: string) =
                         crearToken (caracActual.ToString()) posActual posVacia NumeroLiteral, 
                         Numero, 
                         aumentarPosCol (), 
+                        Continua
+                    )
+                | A_Barra ->
+                    (
+                        crearToken (caracActual.ToString()) posActual posVacia tipoToken.Comentario,
+                        PreComentario,
+                        aumentarPosCol (),
                         Continua
                     )
                 // TODO: Hacerlo más granular haciendo que los operadores sean más específicos?
@@ -252,15 +268,14 @@ let obtenerTokens (entrada: string) =
                     )
                 | A_ComillaDoble -> 
                     (
-                        crearToken "" posActual posVacia TextoLiteral,
-                        // crearToken (caracActual.ToString()) posActual posVacia TextoLiteral, 
+                        crearToken "\"" posActual posVacia TextoLiteral, 
                         Texto, 
                         aumentarPosCol (),
                         Continua
-                    );
+                    )
                 | A_ComillaSimple ->
                     (
-                        crearToken "" posActual posVacia CaracterLiteral, 
+                        crearToken "'" posActual posVacia CaracterLiteral, 
                         Caracter, 
                         aumentarPosCol (), 
                         Continua
@@ -270,6 +285,13 @@ let obtenerTokens (entrada: string) =
                         crearToken (caracActual.ToString()) posActual posVacia NumeroLiteral, 
                         Numero, 
                         aumentarPosCol (), 
+                        Continua
+                    )
+                | A_Barra ->
+                    (
+                        crearToken (caracActual.ToString()) posActual posVacia tipoToken.Comentario,
+                        PreComentario,
+                        aumentarPosCol (),
                         Continua
                     )
                 // TODO: Hacerlo más granular haciendo que los operadores sean más específicos?
@@ -332,7 +354,7 @@ let obtenerTokens (entrada: string) =
                 match tipoCarac with 
                 | A_ComillaDoble ->
                     (
-                        terminarToken tokenActual,
+                        aumentarValor tokenActual "\"" |> terminarToken,
                         Inicio,
                         aumentarPosCol (),
                         Terminado
@@ -360,7 +382,7 @@ let obtenerTokens (entrada: string) =
                 match tipoCarac with 
                 | A_ComillaSimple ->
                     (
-                        terminarToken tokenActual,
+                        aumentarValor tokenActual "'" |> terminarToken,
                         Inicio,
                         aumentarPosCol (),
                         Terminado
@@ -414,6 +436,33 @@ let obtenerTokens (entrada: string) =
                         Inicio, 
                         posActual, 
                         Terminado
+                    )
+            | PreComentario ->
+                match tipoCarac with 
+                | A_Barra ->
+                    (
+                        aumentarValor tokenActual caracActual,
+                        Comentario,
+                        aumentarPosCol (),
+                        Continua
+                    )
+                | _ ->
+                    ( tokenActual, Operador, posActual, Continua )
+            | Comentario ->
+                match tipoCarac with 
+                | A_NuevaLinea ->
+                    (
+                        tokenActual,
+                        InicioLinea,
+                        posActual,
+                        Terminado
+                    )
+                | _ -> 
+                    (
+                        aumentarValor tokenActual caracActual,
+                        estadoActual,
+                        aumentarPosCol (),
+                        Continua
                     )
         
         match estado with 
