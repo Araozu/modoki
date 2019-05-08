@@ -447,7 +447,8 @@ let obtenerTokens (entrada: string) =
                         Continua
                     )
                 | _ ->
-                    ( tokenActual, Operador, posActual, Continua )
+                    let nuevoToken = { tokenActual with tipo = tipoToken.Operador }
+                    ( nuevoToken, Operador, posActual, Continua )
             | Comentario ->
                 match tipoCarac with 
                 | A_NuevaLinea ->
