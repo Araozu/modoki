@@ -84,8 +84,16 @@ let agregarDeclaracion modulo declaracion =
     
 
 let obtenerExpr lista =
-    
-    (lista, Valor { tipo="?"; valor="1" })
+    match lista with
+    | [] -> raise (Exception "Error. La declaración esta incompleta.")
+    | x :: xs ->
+        (*
+        match x.valor with
+        | "sea" ->
+            match xs with
+        | _ -> 
+        *)
+        (lista, Valor { tipo="?"; valor="1" })
 
 
 

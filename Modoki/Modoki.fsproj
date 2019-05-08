@@ -47,6 +47,7 @@
   <ItemGroup>
     <Compile Include="Compilador\AnalisisLexico\Alfabeto.fs" />
     <Compile Include="Compilador\AnalisisLexico\AnalisisLexico.fs" />
+    <Compile Include="Compilador\AnalisisSintactico\TokenMap.fs" />
     <Compile Include="Compilador\AnalisisSintactico\Arbol.fs" />
     <Compile Include="Compilador\AnalisisSintactico\Expresion.fs" />
     <Content Include=".editorconfig" />

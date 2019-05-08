@@ -1,5 +1,5 @@
 ﻿module Main
-open System.IO
+open System
 
 let tokensATxt tokens =
     List.fold (
@@ -10,16 +10,28 @@ let tokensATxt tokens =
             acc + datos
     ) "" tokens
 
+let rec iniciarREPL () =
+    printf "> "
+    let entrada = Console.ReadLine()
+    if entrada = ":s" then
+        ()
+    else
+        let tokens = AnalisisLexico.obtenerTokens entrada
+        match tokens with 
+        | Some tokens ->
+            let tokens' = TokenMap.tokenMap tokens
+            let ast = Arbol.construirAst tokens'
+            printfn " Inorden  :> %s\n Preorden :> %s" ( Arbol.inorden ast ) (Arbol.preorden ast)
+        | None -> printf "alv':"
+        iniciarREPL ()
+
 // Completada la implementacion en F# <- igual a 
 [<EntryPoint>]
 let main argv =
-    printfn "Modoki Lang en F#\n\n"
+    printfn "Modoki REPL"
+    printfn "Ingresa una expresión para evaluarla. Ingresa :s para salir."
     
-    let res = AnalisisLexico.obtenerTokens "sea num1 = 20\nsea num2 = 40"
-    match res with 
-    | Some tokens -> 
-        tokensATxt tokens |> printf "%s"
-    | None -> printf "alv':"
+    iniciarREPL()
     
-    
+    printfn "See ya!"
     0
