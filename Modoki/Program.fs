@@ -10,6 +10,17 @@ let tokensATxt tokens =
             acc + datos
     ) "" tokens
 
+let imprimirTokenAnotado (token: TokenMap.Token) =
+    sprintf "%s : %s" token.valor (Tipos.obtSignature token.signature)
+
+let rec imprAstAnotado (ast: AST.Ast) =
+    match ast with
+    | AST.Hoja -> ""
+    | AST.Nodo (token, AST.Hoja, _) ->
+        imprimirTokenAnotado token
+    | AST.Nodo (token, izq, der) ->
+        imprimirTokenAnotado token + "\n" + imprAstAnotado izq + "\n" + imprAstAnotado der 
+
 let rec iniciarREPL () =
     printf "> "
     let entrada = Console.ReadLine()
@@ -20,18 +31,18 @@ let rec iniciarREPL () =
         match tokens with 
         | Some tokens ->
             let tokens' = TokenMap.tokenMap tokens
-            let ast = Arbol.construirAst tokens'
-            printfn " Inorden  :> %s\n Preorden :> %s" ( Arbol.inorden ast ) (Arbol.preorden ast)
+            let ast = AST.construirAst tokens' |> AnalisisSemantico.anotarAst
+            printfn " Inorden  :> %s\n Preorden :> %s\n" (AST.inorden ast) (AST.preorden ast)
+            printfn " Anotaciones:\n%s" (imprAstAnotado ast)
         | None -> printf "alv':"
         iniciarREPL ()
 
-// Completada la implementacion en F# <- igual a 
 [<EntryPoint>]
-let main argv =
+let main _ =
     printfn "Modoki REPL"
     printfn "Ingresa una expresión para evaluarla. Ingresa :s para salir."
     
-    iniciarREPL()
+    iniciarREPL ()
     
     printfn "See ya!"
     0
