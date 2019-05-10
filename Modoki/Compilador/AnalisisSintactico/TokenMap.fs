@@ -7,20 +7,21 @@ type Token = {
     posFinal: datosPosicion
     tipo: tipoToken
     precedencia: int
+    signature: Tipos.Tipo
 }
 
 let obtPrecedencia (token: AnalisisLexico.Token) =
     if token.tipo = tipoToken.Operador then
         match token.valor with
-        | "<|" | "|>" -> 1
-        | "+" -> 2
-        | "-" -> 3
-        | "*" | "/" | "%" | "%%" -> 4
-        | "**" -> 5
-        | "f" -> 6
-        | "==" | "!=" | "!" | "€" -> 7
-        | "." | "?" | "?:" | "?." -> 8
-        | _ -> 0
+        | "<|" | "|>" -> 2
+        | "+" -> 3
+        | "-" -> 4
+        | "*" | "/" | "%" | "%%" -> 5
+        | "**" -> 6
+        | "f" -> 7
+        | "==" | "!=" | "!" | "€" -> 8
+        | "." | "?" | "?:" | "?." -> 9
+        | _ -> 1
     else
         0
 
@@ -34,5 +35,6 @@ let tokenMap tokens =
             posFinal = t.posFinal
             tipo = t.tipo
             precedencia = obtPrecedencia t
+            signature = Tipos.sinTipo
         }
     ) tokens
