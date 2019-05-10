@@ -1,4 +1,4 @@
-module Arbol
+module AST
 open System
 open TokenMap
 
@@ -43,16 +43,6 @@ let rec insertarAAST ast token =
             Nodo (t, i, insertarAAST d token)
         else
             Nodo (t, i, insertarAAST d token)
-    
-        (* Codigo malogrado :c
-        if t.precedencia < token.precedencia && t.precedencia = 0 then
-            Nodo (token, ast, Hoja)
-        else if t.precedencia > token.precedencia && t.precedencia <> 0 && token.precedencia <> 0 then
-            Nodo (token, ast, Hoja)
-        else match d with
-             | Hoja -> Nodo (t, i, Nodo (token, Hoja, Hoja))
-             | Nodo (t', i', _) -> Nodo (t', i', insertarAAST d token)
-        *)
 
 let construirAst tokens =
     let rec construirAst' ast tokens =
