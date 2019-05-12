@@ -11,7 +11,7 @@ let tokensATxt tokens =
     ) "" tokens
 
 let imprimirTokenAnotado (token: TokenMap.Token) =
-    sprintf "%s : %s" token.valor (Tipos.obtSignature token.signature)
+    sprintf " %s : %s" token.valor (Tipos.obtSignature token.signature)
 
 let rec imprAstAnotado (ast: AST.Ast) =
     match ast with
@@ -20,6 +20,13 @@ let rec imprAstAnotado (ast: AST.Ast) =
         imprimirTokenAnotado token
     | AST.Nodo (token, izq, der) ->
         imprimirTokenAnotado token + "\n" + imprAstAnotado izq + "\n" + imprAstAnotado der 
+
+let rec validarAst (ast: AST.Ast) =
+    " " +
+    try
+        Tipos.obtSignature <| AnalisisSemantico.validarAst ast
+    with
+    | Failure msg -> msg
 
 let rec iniciarREPL () =
     printf "> "
@@ -32,8 +39,10 @@ let rec iniciarREPL () =
         | Some tokens ->
             let tokens' = TokenMap.tokenMap tokens
             let ast = AST.construirAst tokens' |> AnalisisSemantico.anotarAst
-            printfn " Inorden  :> %s\n Preorden :> %s\n" (AST.inorden ast) (AST.preorden ast)
-            printfn " Anotaciones:\n%s" (imprAstAnotado ast)
+            // printfn " Inorden  :> %s\n Preorden :> %s\n" (AST.inorden ast) (AST.preorden ast)
+            printfn " Anotaciones:\n%s\n" (imprAstAnotado ast)
+            printfn " Validez:\n%s\n" (validarAst ast)
+            printfn " AST:\n%s" (AST.imprimirAst ast)
         | None -> printf "alv':"
         iniciarREPL ()
 
