@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-    <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')"/>
-    <Import Project="..\packages\FSharp.Compiler.Tools.10.0.1\build\FSharp.Compiler.Tools.props" Condition="Exists('..\packages\FSharp.Compiler.Tools.10.0.1\build\FSharp.Compiler.Tools.props')"/>
+    <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+    <Import Project="..\packages\FSharp.Compiler.Tools.10.0.1\build\FSharp.Compiler.Tools.props" Condition="Exists('..\packages\FSharp.Compiler.Tools.10.0.1\build\FSharp.Compiler.Tools.props')" />
     <PropertyGroup>
         <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
         <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -33,10 +33,10 @@
         <OtherFlags>--warnon:1182</OtherFlags>
     </PropertyGroup>
     <ItemGroup>
-        <Reference Include="mscorlib"/>
-        <Reference Include="System"/>
-        <Reference Include="System.Core"/>
-        <Reference Include="System.Numerics"/>
+        <Reference Include="mscorlib" />
+        <Reference Include="System" />
+        <Reference Include="System.Core" />
+        <Reference Include="System.Numerics" />
         <Reference Include="FSharp.Core">
             <HintPath>..\packages\FSharp.Core.4.3.4\lib\net45\FSharp.Core.dll</HintPath>
         </Reference>
@@ -47,16 +47,15 @@
     <ItemGroup>
         <Compile Include="Compilador\TablaSimbolos\Tipos.fs" />
         <Compile Include="Compilador\TablaSimbolos\TablaSimbolos.fs" />
-        <Compile Include="Compilador\AnalisisLexico\Alfabeto.fs"/>
-        <Compile Include="Compilador\AnalisisLexico\AnalisisLexico.fs"/>
-        <Compile Include="Compilador\AnalisisSintactico\TokenMap.fs"/>
-        <Compile Include="Compilador\AnalisisSintactico\AST.fs"/>
-        <Compile Include="Compilador\AnalisisSintactico\Expresion.fs"/>
-        <Compile Include="Compilador\AnalisisSemantico\AnalisisSemantico.fs"/>
-        <Content Include=".editorconfig"/>
-        <Compile Include="AssemblyInfo.fs"/>
-        <Compile Include="Program.fs"/>
-        <Content Include="packages.config"/>
+        <Compile Include="Compilador\AnalisisLexico\Alfabeto.fs" />
+        <Compile Include="Compilador\AnalisisLexico\AnalisisLexico.fs" />
+        <Compile Include="Compilador\AnalisisSintactico\TokenMap.fs" />
+        <Compile Include="Compilador\AnalisisSintactico\AST.fs" />
+        <Compile Include="Compilador\AnalisisSemantico\AnalisisSemantico.fs" />
+        <Content Include=".editorconfig" />
+        <Compile Include="AssemblyInfo.fs" />
+        <Compile Include="Program.fs" />
+        <Content Include="packages.config" />
     </ItemGroup>
-    <Import Project="$(FSharpTargetsPath)" Condition="Exists('$(FSharpTargetsPath)')"/>
+    <Import Project="$(FSharpTargetsPath)" Condition="Exists('$(FSharpTargetsPath)')" />
 </Project>
