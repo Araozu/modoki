@@ -10,7 +10,7 @@ let tokensATxt tokens =
             acc + datos
     ) "" tokens
 
-let imprimirTokenAnotado (token: TokenMap.Token) =
+let imprimirTokenAnotado (token: AnalisisLexico.Token) =
     sprintf " %s : %s" token.valor (Tipos.obtSignature token.signature)
 
 let rec imprAstAnotado (ast: AST.Ast) =

@@ -42,6 +42,8 @@ type Token = {
     posInicio: datosPosicion
     posFinal: datosPosicion
     tipo: tipoToken
+    precedencia: int
+    signature: Tipos.Tipo
 }
 
 type fms =
@@ -82,22 +84,25 @@ type estadoDeFms = Terminado | Error of string | Continua
 
 let obtenerTokens (entrada: string) =
 
-    let posVacia = { fil = 0; col= 0; posAbs = 0; posAbsFil = 0 };
+    let posVacia =
+        { fil = 0; col= 0; posAbs = 0; posAbsFil = 0; };
 
     let tokenVacio = {
         valor = ""
         posInicio = posVacia
         posFinal = posVacia
         tipo = Ninguno
+        precedencia = -1
+        signature = Tipos.sinTipo
     }
     
     let crearToken valor posInicio posFinal tipo =
-        { valor = valor; posInicio = posInicio; posFinal = posFinal; tipo = tipo }
+        { tokenVacio with valor = valor; posInicio = posInicio; posFinal = posFinal; tipo = tipo; }
         
     let rec reconocerToken tokenActual posActual estadoActual =
     
         let aumentarPosCol () = 
-            { 
+            {
                 col = posActual.col + 1
                 fil = posActual.fil
                 posAbs = posActual.posAbs + 1
@@ -110,20 +115,8 @@ let obtenerTokens (entrada: string) =
                 posAbs = posActual.posAbs + 1
                 posAbsFil = posActual.posAbs + 1
             }
-        let aumentarValor token valor =
-            {
-                valor = token.valor + valor.ToString ();
-                posInicio = token.posInicio;
-                posFinal = token.posFinal;
-                tipo = token.tipo
-            }
-        let terminarToken token =
-            {
-                valor = token.valor;
-                posInicio = token.posInicio;
-                posFinal = posActual;
-                tipo = token.tipo
-            }
+        let aumentarValor token valor = { token with valor = token.valor + valor.ToString (); }
+        let terminarToken token = { token with posFinal = posActual; }
     
         let caracActual =
             // Cambiado a revision del largo del str porque... JavaScript... undefined...
@@ -268,7 +261,7 @@ let obtenerTokens (entrada: string) =
                     )
                 | A_ComillaDoble -> 
                     (
-                        crearToken "\"" posActual posVacia TextoLiteral, 
+                        crearToken "\"" posActual posVacia TextoLiteral,
                         Texto, 
                         aumentarPosCol (),
                         Continua

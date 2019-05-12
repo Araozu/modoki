@@ -1,16 +1,7 @@
 module TokenMap
 open AnalisisLexico
 
-type Token = {
-    valor: string
-    posInicio: datosPosicion
-    posFinal: datosPosicion
-    tipo: tipoToken
-    precedencia: int
-    signature: Tipos.Tipo
-}
-
-let obtPrecedencia (token: AnalisisLexico.Token) =
+let obtPrecedencia (token: Token) =
     if token.tipo = tipoToken.Operador then
         match token.valor with
         | "<|" | "|>" -> 2
@@ -29,12 +20,5 @@ let obtPrecedencia (token: AnalisisLexico.Token) =
 // AnalisisLexico.Token list -> Token list
 let tokenMap tokens =
     List.map (fun (t: AnalisisLexico.Token) ->
-        {
-            valor = t.valor
-            posInicio = t.posInicio
-            posFinal = t.posFinal
-            tipo = t.tipo
-            precedencia = obtPrecedencia t
-            signature = Tipos.sinTipo
-        }
+        { t with precedencia = obtPrecedencia t }
     ) tokens

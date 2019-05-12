@@ -1,9 +1,8 @@
 module AnalisisSemantico
-open System
 open AST
 open TablaSimbolos
 
-let anotarToken (token: TokenMap.Token) signature = { token with signature = signature }
+let anotarToken (token: AnalisisLexico.Token) signature = { token with signature = signature }
 
 let rec anotarAst ast =
     match ast with

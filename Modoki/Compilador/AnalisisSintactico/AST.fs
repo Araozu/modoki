@@ -1,10 +1,8 @@
 module AST
-open Alfabeto
 open System
-open TokenMap
 
 type Ast =
-    | Nodo of TokenMap.Token * Ast * Ast
+    | Nodo of AnalisisLexico.Token * Ast * Ast
     | Hoja
 
 let rec preorden arbol =
