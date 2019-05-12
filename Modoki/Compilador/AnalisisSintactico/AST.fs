@@ -1,4 +1,5 @@
 module AST
+open Alfabeto
 open System
 open TokenMap
 
@@ -53,3 +54,36 @@ let construirAst tokens =
              construirAst' nuevoAst xs
 
     construirAst' Hoja tokens
+
+let imprimirAst ast =
+    let rec impr ast =
+        match ast with
+        | Hoja -> ("", "", 0)
+        | Nodo (token, Hoja, Hoja) ->
+            let res = " " + token.valor + " "
+            let resLargo = res.Length
+            let espBlanco = List.map (fun _ -> " ") [0 .. resLargo] |> List.fold (+) ""
+            (res, espBlanco, resLargo)
+        | Nodo (token, izq, der) ->
+            let tokenEsMod2 = token.valor.Length % 2 = 0
+            let tokenValor = if tokenEsMod2 then token.valor + " " else token.valor
+            let largoRetr = (tokenValor.Length - 1) / 2
+            
+            let (txtizqSup, txtizqInf, largoIzq) = impr izq
+            let (txtderSup, txtderInf, largoDer) = impr der
+            
+            let espBlancoIzq =
+                List.map (fun _ -> " ") [0 .. (largoIzq - largoRetr - 1)]
+                |> List.fold (+) ""
+                
+            let espBlancoDer =
+                List.map (fun _ -> " ") [0 .. (largoDer - largoRetr - 1)]
+                |> List.fold (+) ""
+            
+            let parteSuperior = espBlancoIzq + tokenValor + espBlancoDer
+            let parteInferior = txtizqSup + "|" + txtderSup + "\n" + txtizqInf + txtderInf
+             
+            (parteSuperior, parteInferior, parteSuperior.Length)
+
+    let (sup, inf, _) = impr ast
+    sup + "\n" + inf
