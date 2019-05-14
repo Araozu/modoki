@@ -7,13 +7,25 @@ let entero = Tipo "Ent"
 let caracter = Tipo "Carac"
 let string = Lista caracter
 
+let identificador = Identificador
+let funAppl = FunAppl
+
 let entFunBuilder x = TipoAnotado (x, Funcion (entero, Funcion (entero, entero)))
 
 let funsEnteros = ["+"; "-"; "*"; "/"; "%"; "**"]
 
-let funConcatenarTxt = TipoAnotado ("++", Funcion (string, Funcion (string, string)))
-let funMultTxt = TipoAnotado (".+.", Funcion (string, Funcion (entero, string)))
-let tablaSimbolos = [funConcatenarTxt; funMultTxt] @ List.map (fun s -> entFunBuilder s) funsEnteros
+let ( >-> ) f g = Funcion (f, g)
+
+let largoTxt = TipoAnotado ("largoTxt", string >-> caracter) 
+
+let vacio = Tipo "()"
+let funConcatenarTxt = TipoAnotado ("++", string >-> (string >-> string))
+let funMultTxt = TipoAnotado (".+.", string >-> (entero >-> string))
+let funImpr = TipoAnotado ("impr", string >-> vacio)
+let funImprMult = TipoAnotado ("imprMult", string >-> (string >-> entero))
+
+let tablaSimbolos = [funConcatenarTxt; funMultTxt; funImpr; funImprMult]
+                    @ List.map (fun s -> entFunBuilder s) funsEnteros
 
 let buscarEnTablaSimbolos nombreFun =
     try
