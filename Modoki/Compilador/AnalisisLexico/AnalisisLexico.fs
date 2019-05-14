@@ -15,6 +15,7 @@ type tipoToken =
     | Ninguno
     | Identacion
     | Comentario
+    | FunAppl // Aplicacion de funciones
     | ComentarioMult // Son tokens porque al transpilar se conservan las comentarios.
 
 type tipoCaracActual =
@@ -82,12 +83,11 @@ let detectarToken str =
 
 type estadoDeFms = Terminado | Error of string | Continua
 
-let obtenerTokens (entrada: string) =
-
-    let posVacia =
+let posVacia =
         { fil = 0; col= 0; posAbs = 0; posAbsFil = 0; };
 
-    let tokenVacio = {
+let tokenVacio =
+    {
         valor = ""
         posInicio = posVacia
         posFinal = posVacia
@@ -95,6 +95,8 @@ let obtenerTokens (entrada: string) =
         precedencia = -1
         signature = Tipos.sinTipo
     }
+
+let obtenerTokens (entrada: string) =
     
     let crearToken valor posInicio posFinal tipo =
         { tokenVacio with valor = valor; posInicio = posInicio; posFinal = posFinal; tipo = tipo; }
