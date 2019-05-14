@@ -1,5 +1,4 @@
 module AST
-open System
 
 type Ast =
     | Nodo of AnalisisLexico.Token * Ast * Ast
@@ -17,31 +16,42 @@ let rec inorden arbol =
 
 type Asoc = L | R
 
+let tokenFunAppl =
+    { AnalisisLexico.tokenVacio with valor = "|f|"; precedencia = 0; tipo = AnalisisLexico.FunAppl }
 
-let rec insertarAAST ast token =
+let crearNodo token = Nodo (token, Hoja, Hoja)
+
+let rec insertarAAST ast (token: AnalisisLexico.Token) =
     match ast with
-    | Hoja -> Nodo (token, Hoja, Hoja)
-    | Nodo (t, Hoja, Hoja) ->
-        if token.precedencia > t.precedencia && t.precedencia = 0 then
-            Nodo (token, ast, Hoja)
-        else
-            printfn "Token problematico:\n %A \n" token
-            printfn "pr token Nuevo: %i -> pr token Actual: %i " token.precedencia t.precedencia
-            raise (Exception "Error. No se pueden poner 2 valores juntos v:<")
-    | Nodo (t, i, Hoja) ->
-        if token.precedencia = 0 then
-            Nodo (t, i, Nodo (token, Hoja, Hoja))
-        else
-            printfn "Token problematico:\n %A \n" token
-            raise (Exception "Error. No se pueden poner 2 operadores juntos.")
-    | Nodo (t, i, d) ->
-        
-        if token.precedencia <= t.precedencia && token.precedencia <> 0 then
-            Nodo (token, ast, Hoja)
-        else if token.precedencia <= t.precedencia && token.precedencia = 0 then
-            Nodo (t, i, insertarAAST d token)
-        else
-            Nodo (t, i, insertarAAST d token)
+    | Hoja ->
+        match token.tipo with
+        | AnalisisLexico.Operador -> failwith "Los operadores infijos no se pueden usar como funciones."
+        | _ -> crearNodo token
+    | Nodo (_, Hoja, Hoja) ->
+        match token.tipo with
+        | AnalisisLexico.Operador -> Nodo (token, ast, Hoja)
+        | _ -> Nodo (tokenFunAppl, ast, crearNodo token)
+    | Nodo (vToken, izq, Hoja) ->
+        match vToken.tipo with
+        | AnalisisLexico.Operador ->
+            match token.tipo with
+            | AnalisisLexico.Operador -> failwith "Se encontraron 2 operadores juntos"
+            | _ -> Nodo (vToken, izq, crearNodo token)
+        | _ -> failwith "Err tec. FunAppl no tiene valor al que applicarse. (?)"
+    | Nodo (vToken, izq, der) ->
+        match vToken.tipo with
+        | AnalisisLexico.Operador ->
+            match token.tipo with
+            | AnalisisLexico.Operador when token.precedencia > vToken.precedencia ->
+                Nodo (vToken, izq, insertarAAST der token)
+            | AnalisisLexico.Operador ->
+                Nodo (token, ast, Hoja)
+            | _ -> Nodo (vToken, izq, insertarAAST der token)
+        | AnalisisLexico.FunAppl ->
+            match token.tipo with
+            | AnalisisLexico.Operador -> Nodo (token, ast, Hoja)
+            | _ -> Nodo (tokenFunAppl, ast, crearNodo token)
+        | _ -> failwith "¿Qué pasó aquí?"
 
 let construirAst tokens =
     let rec construirAst' ast tokens =
