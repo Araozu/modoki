@@ -2,8 +2,6 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Modoki", "Modoki\Modoki.fsproj", "{851FBFF9-9E43-448E-A90C-35AEB946D68A}"
 EndProject
-Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Parsers", "..\Parsers\Parsers\Parsers.fsproj", "{7B51E662-5427-44B1-A539-775AD19CD177}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -14,9 +12,5 @@ Global
 		{851FBFF9-9E43-448E-A90C-35AEB946D68A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{851FBFF9-9E43-448E-A90C-35AEB946D68A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{851FBFF9-9E43-448E-A90C-35AEB946D68A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{7B51E662-5427-44B1-A539-775AD19CD177}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7B51E662-5427-44B1-A539-775AD19CD177}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7B51E662-5427-44B1-A539-775AD19CD177}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7B51E662-5427-44B1-A539-775AD19CD177}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
