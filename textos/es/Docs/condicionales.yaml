@@ -1,0 +1,135 @@
+titulo: Condicionales
+txt:
+  - >
+    -- Obsoleto | El lenguaje ha cambiado desde que se escribio esta parte. --
+subtemas:
+    -   titulo: Evaluación condicional
+        txt:
+            - >
+                Si quieres evaluar código condicionalmente, tienes la estructura de toda la
+                vida `if/else`, pero en español :)
+            - |
+                $
+                si "Hola" == "hola"
+                    "Verdadero"
+                sino
+                    "Falso"
+            - >
+                Los parentesis son opcionales.<br>
+                <br>
+                Ahora bien, hay un cierto número de "requisitos" que tienen todos los
+                condicionales: <br>
+                <br>
+                <h4>1. La condición debe ser de tipo Bool</h4>
+                <br>
+                En JavaScript es posible usar cualquier tipo de dato en los condicionales.
+                Para garantizar la seguridad, en Modoki solo pueden usarse Bool
+            - |
+                $
+                si "Hola" // Error. Se esperaba un Bool pero se recibió un Txt
+                    expr
+                sino
+                    expr
+            - >
+                <h4>2. La rama `sino` (else) es obligatoria</h4>
+                <br>
+                Los condicionales también son expresiones, así que podemos hacer esto:
+            - |
+                $
+                sea saludo =
+                    si esEntornoFormal
+                        "Hola"
+                    sino
+                        "Buenos dias"
+            - >
+                Si el valor `esEntornoFormal` es verdadero, saludo vale "Hola", sino vale
+                "Buenos dias". <br>
+                <br>
+                Si omitieramos la rama `sino`, y `esEntornoFormal` fuera falso, ¿Cuál sería
+                el valor de `saludo`?
+            - |
+                $
+                sea esEntornoFormal = F
+                sea saludo =
+                    si esEntornoFormal
+                        "Hola"
+                // ¿Cuál es el valor de `saludo`?
+                // Error. Falta la rama `sino`
+            - >
+                Un valor no puede estar indefinido en Modoki, por eso la rama `sino` es
+                obligatoria. <br>
+                <br>
+                <h4>3. Las expresiones de ambas ramas deben ser del mismo tipo</h4>
+                <br>
+                ¿Puedes decirme cuál es el tipo de dato de `valor`? ¿Es Txt? ¿Es Num?
+            - |
+                $
+                sea valor =
+                    si condicion
+                        10
+                    sino
+                        "20"
+                // Error. Ambas ramas deben tener el mismo tipo de dato.
+    -   titulo: Identación
+        txt:
+            - >
+                Ya te diste cuenta de que el valor de las ramas está identado. Esto es muy
+                importante, en Modoki la estructura se define a través de la identación.<br>
+                Todo el código perteneciente a la rama `si` está identada
+            - |
+                $
+                si condicion
+                    // Esto está dentro de la rama `si`
+                    sea x = 20
+                    x + 20
+                // Esto está fuera de la rama `si`
+                sino
+                    // Dentro de `sino`
+                    sea z = 50
+                    z * 10
+                // Fuera
+
+                // Este código no funciona &darr;
+                si condicion
+                sea x = 20
+                x + 20
+                // Error. La rama `si` está vacia.
+    -   titulo: Ahora abreviado
+        txt:
+            - >
+                Cuando nuestras condiciones son simples, es molesto tener que separar en una
+                nueva linea e identar. Por eso existe una sintaxis adicional:
+            - |
+                $
+                si condicion -> expr
+                sino expr
+
+                si 1 == 1 -> "Verdad"
+                sino -> "Falso"
+            - >
+                Al terminar la condición se coloca una flecha -> y el resultado. En el sino
+                tambien se coloca una flecha en ese modo.
+    -   titulo: sino si (else if)
+        txt:
+            - >
+                Otros lenguajes nos brindan la estructura else if/elif. Modoki no la tiene.
+                En su lugar, se hace lo siguiente:
+            - |
+                $
+                si edad < 18
+                    "¡Menor de edad!"
+                sino si edad == 18
+                    "Al límite."
+                sino
+                    "Mayor de edad"
+            - >
+                Lo cual es igual (pero más organizado) que:
+            - |
+                $
+                si edad < 18
+                    "¡Menor de edad!"
+                sino
+                    si edad == 18
+                        "Al límite"
+                    sino
+                        "Mayor de edad"

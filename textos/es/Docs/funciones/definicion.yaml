@@ -1,0 +1,84 @@
+titulo: Definición de funciones.
+txt:
+    - >
+        Basta de cháchara y veamos cómo crear una función en Modoki. Una función consta de 3 partes:
+    - |
+        $
+        fun miFun: Num x -> Num = x ** 3
+subtemas:
+    -   titulo: Declaración
+        txt:
+            - >
+                Empecemos por lo facil. Para crear una función usamos la palabra clave fun seguido
+                del nombre de la función.<br>
+                Nuestra función 'miFun' tomará como parametro un número, y lo devolverá elevado al
+                cubo.
+            - |
+                $
+                fun miFun
+            - >
+                Ahora, la signatura de la función.
+    -   titulo: Signatura
+        txt:
+            - >
+                ¡Flechas! Una función tiene la signatura
+            - |
+                $
+                Entrada nombre -> Salida
+            - >
+                En nuestro caso, tomamos un Num como entrada, y la salida tambien es un Num.<br>
+                Le pondremos x como nombre a la entrada
+            - |
+                $
+                Num x -> Num
+            - >
+                Ahora, usemos la signatura en la función. Usamos dos puntos para vincularlas, y
+                colocamos un '=' al final.
+            - |
+                $
+                fun miFun: Num x -> Num =
+            - >
+                Ahora, al cuerpo de la función.
+    -   titulo: Cuerpo
+        txt:
+            - >
+                En el cuerpo colocaremos las operaciones que realizaremos con 'x', y al final
+                devolveremos un Num.<br>
+                <br>
+                Algo importante a notar es que Modoki no tiene palabra clave 'return'. Lo que se
+                retorna es siempre la última expresión del bloque. Por ejemplo, si nuestro
+                bloque tuviera
+            - |
+                $
+                sea num = 20
+                sea ratio = 0.5
+                num * ratio
+            - >
+                Lo que se devolvería es 'num * ratio'. Puedes imaginar que en la última linea se
+                añade un return:
+            - |
+                $
+                sea num = 20
+                sea ratio = 0.5
+                return num * ratio
+            - >
+                Volviendo a nuestra función, lo único que hacemos es elevar al cubo, así que nuestra
+                expresión será 'x ** 3', y la pondremos despues del '='.
+            - |
+                $
+                fun miFun: Num x -> Num = x ** 3
+    -   titulo: Llamando nuestra función.
+        txt:
+            - >
+                Ya que hemos tratado el tema, ya sabes cómo llamar una función:
+            - |
+                $
+                sea num1 = miFun 2 // 8
+                sea num2 = miFun 3 // 27
+                sea num3 = miFun 6 // 216
+
+                sea mal1 = miFun "10" // Error. Se esperaba un Num, pero se recibió un Txt
+                sea mal2: Txt = miFun 10 // Error. miFun devuelve un Num, pero se lo asignó a un Txt
+            - >
+                Espero que sepas por qué las dos últimas lineas dan error. Si no lo sabes,
+                quizas debas revisitar Anotaciones de Tipos.

@@ -1,0 +1,13 @@
+nombre: Express
+descripcion:
+  - |
+    API del framework para Node.js Express.
+funciones:
+  - nombre: get
+    signatura: "fun get (path: Txt) (callback: Request -> Response -> ())"
+    descripcion: |
+      Enruta las peticiones HTTP GET con url ´path´ haciendo uso de ´callback´.
+  - nombre: listen
+    signatura: "fun listen (port: Num) (callback: Error -> ())"
+    descripcion: |
+      Escucha peticiones en el puerto ´port´, y ejecuta ´callback´ al iniciar.

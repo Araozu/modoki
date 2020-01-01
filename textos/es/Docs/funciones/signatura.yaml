@@ -1,0 +1,132 @@
+titulo: Signatura de una función
+txt:
+  - |
+    <h4>Es posible que est a sección cambie en el futuro.</h4>
+    <br>
+    La signatura de una función representa el tipo de la función. Nos dice qué parámetros
+    toma, qué parametros devuelve, y cómo usarla.
+subtemas:
+  - titulo: Signatura básica
+    txt:
+      - |
+        Una signatura tiene la forma
+      - |
+        $
+        param -> retorno
+      - |
+        donde param es el tipo de dato del parámetro, y retorno es el tipo de dato del
+        resultado. Veamos unos ejemplos:
+      - |
+        $
+        // Toma un Num como parámetro, y devuelve un Num
+        Num -> Num
+
+        // Toma un Txt como parámetro, y devuelve un Num
+        Txt -> Num
+
+        // Toma un Array de Num como parámetro, y devuelve un Num
+        [Num] -> Num
+
+        // Toma una tupla de Txt y Num, y devuelve un Bool
+        (Txt, Num) -> Bool
+
+        // Toma un Txt y devuelve un Array de Num
+        Txt -> [Num]
+      - |
+        Puedes tener signaturas más complejas si compones los parámetros.
+        <br>
+        <br>
+        Ahora veamos unas fuciones simples con sus respectivas signaturas.
+      - |
+        $
+        // Txt -> Txt
+        fun agregarSignoExclamacion t = t <> "!"
+
+        // (Txt, Txt) -> Txt
+        fun crearNombreCompleto (nombre, apellido) =
+            nombre <> " " <> apellido
+  - titulo: Signatura de funciones de más de 1 parámetro
+    txt:
+      - |
+        Cuando una funcion tiene 2 a más parámetros, su signatura es así:
+      - |
+        $
+        // 2 params
+        param1 -> param2 -> retorno
+
+        // 3 params
+        param1 -> param2 -> param3 -> retorno
+
+        // 4 params
+        param1 -> param2 -> param3 -> param4 -> retorno
+
+        // etc.
+      - |
+        Estas pueden ser un poco confusas, pero hay una razón por la que son así, la cual
+        detallaremos en la sección de Currying.
+        <br>
+        <br>
+        Por ejemplo, la signatura
+      - |
+        $
+        Txt -> Num -> Bool
+      - |
+        nos dice que la función toma 2 parámetros: un Txt y un Num, y nos devuelve un
+        Bool.
+        <br>
+        La signatura
+      - |
+        $
+        [Txt] -> Num -> Bool -> [Num]
+      - |
+        Nos dice que la función toma como parámetros un Array de Txt, un Num, un Bool, y
+        devuelve un Array de Num.
+        <br>
+        <br>
+        Como con todas las cosas nuevas, con la práctica serás capaz de reconocer y
+        entender las signaturas en segundos.
+  - titulo: Signaturas anidadas
+    txt:
+      - |
+        En JavaScript es muy común pasar funciones como parámetros, o devolver funciones.
+        Y ya que acabamos de aprender sobre signaturas, ¡Veamos cuál es la signatura
+        de una función que retorna funciones!
+      - |
+        $
+        // Esta función toma un Num como parámetro, y devuelve otra función.
+        // La 'otra' función toma como parámetro un Num, y devuelve un Boolean
+        Num  ->  (Num -> Bool)
+
+        // Signatura de un callback.
+        (Txt -> Num)  ->  Num
+
+        // Una función que toma como parámetros:
+        // - Un Num
+        // - Una función Num -> Txt
+        // y devuelve un Txt
+        Num  ->  (Num -> Txt)  -> Txt
+      - |
+        En mi opinión, tiene bastante sentido : )
+  - titulo: Signatura de fun. sin params/sin retorno
+    txt:
+      - |
+        Finalmente, la signatura de una función que no toma parámetros, no
+        devuelve nada, o ambos.
+      - |
+        $
+        () -> Txt // No toma parámetros
+
+        Txt -> () // No devuelve nada
+
+        () -> ()  // Ambos
+      - |
+        Simplemente la tupla vacia. Al anidarse es igual.
+      - |
+        $
+        // Toma:
+        // - un Txt
+        // - una función que toma:
+        // &nbsp;&nbsp;- un Txt
+        // &nbsp;&nbsp;- y no devuelve nada.
+        // y no devuelve nada
+        Txt -> (Txt -> ()) -> ()

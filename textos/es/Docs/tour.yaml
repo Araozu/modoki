@@ -1,0 +1,268 @@
+titulo: Tour de Modoki
+txt:
+  - |
+    El Tour de Modoki contiene un resumen de las caracteristicas del lenguaje, y está dirigido
+    a programadores con experiencia en JavaScript y en lenguajes funcionales.<br>
+    <br>
+    Si no sabes ni JavaScript ni Programación Funcional - no te preocupes. El resto de la
+    documentación te enseñará paso a paso los conceptos necesarios para aprender Modoki.
+subtemas:
+  - titulo: Hola mundo
+    txt :
+      - |
+        $
+        // Usando las funciones de JS
+        console.log "¡Hola mundo!"
+
+        // Usando la función impr de Modoki
+        impr "¡Hola mundo!"
+      - |
+        Como habras notado, no usamos parentesis para llamar a la función. Si nunca programaste
+        en un lenguaje como Haskell/OCaml/F#/Elm te parecerá raro. Pero en realidad, tiene su
+        uso que se explica a detalle en la documentación.
+  - titulo: Constantes y variables
+    txt:
+      - |
+        Para declarar constantes usamos la palabra clave 'sea'. Estas equivalen a 'const' de JS.
+      - |
+        $
+        sea nombre = "Pedro"
+        sea edad = 20
+        sea esSoltero = false
+
+        nombre = "Juan" // Error. nombre es una constante.
+      - |
+        Y para declarar variables, agregamos 'mut' a una constante.
+      - |
+        $
+        sea mut esSoltero = false
+
+        esSoltero = true // OK.
+  - titulo: Tipos de datos y signaturas
+    txt:
+      - |
+        Modoki usa los mismos tipos de datos de JS, y su signatura es similar a TypeScript.
+        Sin embargo, Modoki ofrece alias para los tipos primitivos.
+      - |
+        $
+        sea nombre: Txt = "Pedro"
+        sea edad: Num = 20
+        sea esSoltero: Bool = false
+      - |
+        Tambien, no existe conversión de datos implícita ni operadores sobrecargados.
+        Eso quiere decir que no podemos mezclar Num y Txt o viceversa como en JS.
+      - |
+        $
+        "20" + 20 // Error. El operador '+' espera como parámetros Num Num.
+        20 + 20 // 40
+      - |
+        - Los Txt se concatenan con el operador '<>'<br>
+        - Solo se crean con comillas dobles, nunca con comillas simples.
+        - Cuentan con interpolación automáticoa.
+      - |
+        $
+        "hola" + " mundo"  // Error. El operador '+' espera como parámetros Num Num.
+        "hola" <> " mundo" // hola mundo
+
+        sea nombre = "Pedro"
+
+        sea saludo = "Bienvenido ${nombre}"
+  - titulo: Arrays
+    txt:
+      - |
+        Los Arrays son de tamaño dinámico y de un solo tipo.
+      - |
+        $
+        sea numeros: [Num] = [0, 1, 2, 3, 4, 5]
+
+        numeros[0] // 0
+        numeros[5] // 5
+
+  - titulo: Tuplas
+    txt:
+      - |
+        $
+        // Sin signatura
+        sea pedro = ("Pedro", 22)
+
+        // Con signatura
+        sea pedro: (Txt, Num) = ("Pedro", 22)
+  - titulo: Condicionales
+    txt:
+      - |
+        A diferencia de JS, en Modoki los condicionales <b>siempre</b> usan booleanos.
+      - |
+        $
+        sea edad = 20
+        sea esMayorDeEdad = edad >= 18
+
+        si esMayorDeEdad
+            console.log "Eres mayor de edad!"
+        sino
+            console.log "Aun eres menor de edad."
+
+
+        si edad // &larr; Error. edad no es de tipo Bool.
+            console.log "Esto no se imprimirá"
+
+      - |
+        Los condicionales tambien son expresiones:
+      - |
+        $
+        sea respuesta =
+            si esMayorDeEdad
+                "Eres mayor de edad!"
+            sino
+                "Aun eres menor de edad."
+
+        console.log respuesta
+  - titulo: Bucles
+    txt:
+      - |
+        Muy pronto.
+  - titulo: Switch
+    txt:
+      - |
+        La expresión 'cuando' actua como switch, y cuenta además con pattern matching.
+
+      - |
+        $
+        sea edad = 20
+
+        cuando edad es
+        | <18 -> console.log "Menor de edad"
+        | 18  -> console.log "En el límite!"
+        | >18 -> console.log "Mayor de edad"
+  - titulo: undefined/void/null
+    txt:
+      - |
+        Para representar la ausencia de datos necesitamos definir un tipo indeterminado,
+        colocando '?' al final del tipo.<br>
+        Luego, podemos usar '()' en vez de undefined/void/null.
+      - |
+        $
+        sea nombre: Txt? = ()
+
+  - titulo: Funciones
+    txt:
+      - |
+        Las funciones en Modoki:<br>
+        - Son ciudadanos de primera clase<br>
+        - Cuentan con Currying
+
+      - |
+        $
+        fun sumar x y = x + y
+
+        sumar 10 20 // 30
+
+        sea sumar20 = sumar 20 // Curryng
+        sumar20 30 // 50
+      - |
+        $
+        // Funciones anidadas
+        fun funcion1 x =
+            fun funcion2 y =
+                y * 2
+
+            sea resultado = funcion2 x
+            resultado
+      - |
+        $
+        // Funciones anónimas
+        sea sumar = fn x y -> x + y
+
+        // En contexto
+        sea numeros = [1, 2, 3, 4, 5]
+        numeros.reduce (fn anterior nuevo -> anterior + nuevo)
+  - titulo: Objetos
+    txt:
+      - >
+        Puedes crear y usar los objetos como si fuera JavaScript, con azucar sintáhtiha extra.
+        <br>
+        <br>
+        Todas la siguientes declaraciones son iguales.
+      - |
+        $
+        sea auto = {
+            marca: "Fiat",
+            modelo: "500",
+            color: "blanco"
+        }
+
+        sea auto =
+            marca: "Fiat"
+            modelo: "500"
+            color: "blanco"
+
+
+        sea auto = {marca: "Fiat", modelo: "500", color: "blanco"}
+      - >
+        Y accedes a sus propiedades usando '.', mas no con corchetes.
+      - |
+        $
+        auto.color // blanco
+        auto[color] // &larr; error
+      - >
+        En lugar de this, se coloca un signo '@'
+      - |
+        $
+        sea persona =
+            nombre: "Max"
+            apellido: "Ochoa"
+            nombreCompleto: fn -> "${@nombre} ${@apellido}"
+  - titulo: Uniones
+    txt:
+      - >
+        Son estructuras similares a union de C, pero con una funcionalidad diferente.
+      - |
+        $
+        union Decision =
+            | Si
+            | No
+
+        sea decision1 = Si
+        sea decision2 = No
+      - >
+        Estas uniones pueden contener datos adicionales
+      - |
+        $
+        union Persona =
+            | Director Txt
+            | Alumno Txt
+
+        sea director = Director "Raul"
+        sea alumno   = Alumno "Diego"
+  - titulo: Genéricos
+    txt:
+      - >
+        Los tipos genéricos se representan con letras en minusculas en las signaturas en lugar de
+        mayusculas, y sin '<>'.
+      - |
+        $
+        // 'a -> Txt
+        fun aTxt x = x.toString()
+
+        union ArbolBinario 'a =
+            | Nodo ('a, ArbolBinario, ArbolBinario)
+            | Hoja
+  - titulo: Clases
+    txt:
+      - >
+        Las clases usan un conjunto de palabras claves diferentes de las que se usan para
+        el resto del lenguaje. Sin embargo, considero que son intuitivas.
+      - |
+        $
+        clase Gato =
+
+            campo nombre: Txt
+            campo edad: Num
+            campo vidas: Num
+
+            constructor nombre' edad' vidas' =
+                nombre = nombre'
+                edad = edad'
+                vidas = vidas'
+
+            metodo maullar () =
+                console.log "Miau"

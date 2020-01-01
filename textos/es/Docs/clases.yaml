@@ -1,0 +1,47 @@
+titulo: Clases
+txt:
+  - |
+    <i><b>Esta sección está dirigida a programadores con experiencia en POO, no se explicarán
+    conceptos básicos.</b></i>
+    <br>
+    <br>
+    Los objetos son una estructura fundamental de JavaScript, con ellos podemos agrupar un conjunto de
+    datos con funciones que operan sobre esos datos.<br>
+    <br>
+    La Programación Orientada a Objetos busca dotar a los objetos de una mayor poder en el lenguaje,
+    sin embargo, su especificación y uso no siempre es el adecuado. Es por ello que Modoki toma una
+    aproximación mucho más estricta a POO, a diferencia de los lenguajes tradicionales como Java o C#.
+subtemas:
+  - titulo: Ejemplo
+    txt:
+      - |
+        Como todo buen tutorial de POO, vamos a escribir un ejemplo trivial basado en cosas que casi
+        nunca haremos en nuestras vidas.
+      - |
+        $
+        clase Gato
+
+            campo nombre: Txt
+            campo edad: Num
+            campo vidas: Num
+
+            constructor nombre edad vidas =
+                @nombre = nombre
+                @edad   = edad
+                @vidas  = vidas
+
+            met pub maullar () =
+                impr "¡Miau!"
+
+      - |
+        Haciendo a un lado la sintaxis, este ejemplo es fácil de entender. Definimos una clase Gato
+        que tiene como atributos (campos, en Modoki) un nombre, su edad y sus vidas.<br>
+        En el constructor simplemente asignamos esas variables. Finalmente, definimos un método
+        maullar, el cual, pues, hace maullar al gato.
+      - |
+        $
+        sea apache = Gato "Apache" 1 7
+        apache.maullar()
+      - |
+        Ahora creamos un gato y lo hacemos maullar. Nota que no usamos 'new', simplemente llamamos a
+        la clase como si fuera una función.

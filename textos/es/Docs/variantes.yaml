@@ -1,0 +1,15 @@
+titulo: Variantes
+txt:
+  - >
+    Similares a union de C, las variantes son una estructura muy útil de la programación
+    funcional.
+  - |
+    $
+    variante Persona =
+        | Alumno de Txt
+        | Profesor de Txt
+        | Director de Txt
+
+    sea bob = Alumno "Bob"
+    sea juan = Profesor "Juan"
+    sea pedro = Director "Pedro"

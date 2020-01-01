@@ -1,0 +1,40 @@
+titulo: Polimorfismo
+txt:
+  - >
+    El polimorfismo en Modoki es parte fundamental del lenguaje, permite usar una única interfaz
+    a varios tipos de datos. En Modoki se usa polimorfismo paramétrico y polimorfismo basado
+    en subtipos (clases).
+subtemas:
+  - titulo: Polimorfismo paramétrico
+    txt:
+      - >
+        Este tipo de polimorfismo se basa en interfaces, funciones y tipos genéricos.
+        Dentro de una interfaz definimos un conjunto de funciones:
+      - |
+        $
+        interfaz Igualable<A>
+
+            defun (==): A -> A -> Bool
+            defun (!=): A -> A -> Bool
+      - >
+        Hemos definido la interfaz ´Igualable´, mediante la cual podemos definir los operadores
+        ´==´ y ´!=´.<br>
+        <br>
+        Si quisieramos comparar dos ´Gato´ para saber si son iguales o diferentes haríamos lo
+        siguiente:
+      - |
+        $
+        clase Gato
+
+            campo nombre: Txt
+            campo edad: Num
+
+            // constructor, metodos, etc...
+
+        impl Igualable en Gato
+
+            // t1 y t2 son de tipo Gato
+            fun! (==) t1 t2 = t1.nombre == t2.nombre && t1.edad == t2.edad
+
+            fun! (!=) t1 t2 = !(t1 == t2)
+

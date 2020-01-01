@@ -1,0 +1,44 @@
+titulo: Constructor
+txt:
+  - >
+    El constructor en Modoki es la función encargada de inicializar <b>todos</b> los campos
+    de una clase, y cuenta con azucar sintáctica para operaciones comunes.
+subtemas:
+  - titulo: Constructor por defecto
+    txt:
+      - >
+        Si solo queremos inicializar los campos de la clase podemos usar el constructor por
+        defecto.<br>
+        Para ello simplemente usamos la palabra clave ´constructor´ y colocamos los nombres
+        de los campos
+      - |
+        $
+        clase Persona
+
+            campo nombre: Txt
+            campo edad: Num
+
+            constructor nombre edad // Constructor por defecto
+
+            met pub imprimirNombre () = console.log @nombre
+
+
+        sea jorge = Persona "Jorge" 20
+        jorge.imprimirNombre ()  //: Jorge
+
+      - >
+        Si por el contrario es necesario realizar algún procesamiento a esos datos simplemente
+        agregamos un cuerpo a la función:
+      - |
+        $
+        clase Persona
+
+            campo nombre: Txt
+            campo edad: Num
+
+            constructor nombre edad =
+                // Procesar los parámetros
+                @nombre = nombre
+                @edad = edad
+
+            met pub imprimirNombre () = console.log @nombre

@@ -1,0 +1,111 @@
+titulo: Arrays
+txt:
+  - |
+    Otra estructura importante en todo lenguaje: Arrays. Estos son similares a JS,
+    con algunas caracteristicas añadidas.
+subtemas:
+  - titulo: Creación y acceso
+    txt:
+      - |
+        Su uso es similar a JavaScript:
+      - |
+        $
+        sea numeros = [1, 2, 3, 4, 5]
+        numeros[0] // 1
+        numeros[1] // 2
+      - |
+        Pero es indispensable saber ciertos aspectos:
+        <br>
+        <br>
+        Un Array agrupa varios <b>elementos de un mismo tipo</b> de forma ordenada:
+      - |
+        $
+        // Anotando el tipo
+        sea numeros: [Num] = [1, 2, 3, 4, 5]
+        sea nombres: [Txt] = ["Auron", "Ana"]
+
+        sea varios: [Num] = [1, "Hola"] // Error. varios es un Array de Num, pero el
+          // elemento 1 es de tipo Txt.
+
+        // Sin anotar el tipo
+        sea varios2 = [1, "Hola"] // Error. varios2 ha sido inferido como un Array de Num,
+          // pero el elemento 1 es de tipo Txt.
+      - |
+        <br>
+        <br>
+        Un Array es <b>inmutable</b>. Eso significa que usa vez creado, sus elementos
+        no pueden cambiar. En la siguiente sección veremos Arrays mutables.
+      - |
+        $
+        sea numeros = [1, 2, 3]
+        numeros[0] = 0   // Error. El Array numeros es inmutable.
+
+        numeros.push 4   // Error. El Array numeros es inmutable.
+        numeros.shift () // Error. &uarr;
+  - titulo: Arrays Mutables
+    txt:
+      - |
+        Los Arrays mutables se crean con una sintaxis diferente:
+      - |
+        $
+        sea numerosCambiantes: [|Num|] = [|1, 2, 3|]
+        numerosCambiantes[0] = 5 // OK
+        numerosCambiantes.push 9 // 4
+      - |
+        Estos tambien agrupan elementos de un solo tipo. EmModoki no es posible tener
+        Arrays de varios tipos, pero ese comportamiento se puede emular con tuplas.
+  - titulo: "Pattern Matching y el operador ::"
+    txt:
+      - |
+        Una vez más, un poco de Pattern Matching. Con los Arrays (mutables e inmutables)
+        podemos extraer el primer elemento y el resto de la siguiente manera:
+      - |
+        $
+        sea nombres = ["Beto", "Christina", "David"]
+
+        // Queremos extraer el primer elemento y el resto
+        sea p::r = nombres
+
+        console.log p // "Beto"
+        console.log r // ["Christina", "David"]
+
+        
+        // Solo nos importa el primer elemento
+        sea p::_ = nombres
+        
+        console.log p // "Beto"
+
+
+        // Solo nos importa el resto
+        sea _::r = nombres
+
+        console.log r // ["Christina", "David"]
+
+
+        // Primer y segundo elemento
+        sea p::s::_ = nombres
+        
+        console.log p // "Beto"
+        console.log s // "Christina"
+
+
+        // Solo el tercero
+        sea _::_::t::_ = nombres
+        
+        console.log t // "David"
+      - |
+        Este patron se usa principalmente en funciones y expresiones 'cuando' que veremos
+        más adelante.
+        <br>
+        <br>
+        Adicionalmente, el operador :: se usa tambien para realizar la operacion
+        contraria:
+      - |
+        $
+        sea dosACinco = [2, 3, 4, 5]
+
+        sea unoACinco = 1 :: dosACinco
+
+        console.log unoACinco // [1, 2, 3, 4, 5]
+      - |
+        Los otros ejemplos usados en pattern matching tambien funcionan.

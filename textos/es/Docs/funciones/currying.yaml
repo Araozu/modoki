@@ -1,0 +1,172 @@
+titulo: Currying
+txt:
+  - |
+    Curryng es uno de los conceptos más importantes de programación funcional,
+    y uno de los más dificiles de entender. Así que usaremos JavaScript como base,
+    y luego pasaremos a la acción.
+subtemas:
+  - titulo: Funciones que retornan funciones
+    txt:
+      - |
+        En JavaScript es posible (aunque no muy común) que las funciones devuelvan
+        otras funciones. A este comportamiento se le conoce como 'Closures', y lo
+        utilizaremos para explicar Currying y Aplicación Parcial, así que si aun
+        no sabes qué son las Closures, te recomiendo que las aprendas primero.
+        <br>
+        <br>
+        Veamos una closure muy simple:
+      - |
+        $
+        const crearClosure = param => {
+            const val = param * 2;
+            return (dato) => dato === val;
+        }
+      - |
+        La función 'crearClosure' toma como parámetro un número, y devuelve una función
+        nueva. Esta función a su vez, toma un número como parámetro, lo compara con 'val',
+        y devuelve si son iguales.
+        <br>
+        En Modoki, lo escribiríamos así:
+      - |
+        $
+        // Num -> (Num -> Num)
+        fun crearClosure param =
+            sea val = param * 2
+            fn dato -> dato == val  // Devolvemos una función anónima.
+      - |
+        Como ya sabes acerca de closures, este ejemplo es facil de entender. Volveremos
+        a usar las closures en un momento, antes tenemos que aprender sobre funciones
+        puras.
+  - titulo: Funciones puras
+    txt:
+      - |
+        En programación funcional, una función pura tiene las siguientes propiedades:
+        <br>
+        <br>
+        <h5>Siempre devuelven el mismo resultado con el mismo parámetro.</h5>
+        Si tengo la siguiente función:
+      - |
+        $
+        fun sumar10 num = num + 10
+      - |
+        Y la llamo 1 vez con parámetro 50, devolverá 60.
+        <br>
+        Si la llamo 2 veces, ambas con el parámetro 50, devolverá 60 las dos veces.
+        <br>
+        Si la llamo 1000 veces con 50, las mil veces devolverá 60.
+        <br>
+        A esto se refiere la primera propiedad.
+        <br>
+        <br>
+        Aunque parezca obvio, no siempre es así.
+        Por ejemplo, esta función no devolverá lo mismo si la llamo 2 veces:
+      - |
+        $
+        fun crearAleatorio max = Math.random () * 50
+      - |
+        Mucho menos si la llamo 1000 veces.
+        <br>
+        <br>
+        Los lenguajes funcionales 'puros' como Haskell se aseguran de que esta regla se
+        cumpla estrictamente. Modoki, siendo funcional 'impuro', es más flexible al
+        respecto.
+        <br>
+        <br>
+        <h5>Solo tienen una entrada, y solo una salida.</h5>
+        O en otras palabras, solo un parámetro y un retorno.
+        <br>
+        Aunque podemos crear funciones de 2 a más parámetros,
+        esta regla siempre se cumple. Simplemente aun no sabes cómo. Ese cómo
+        se llama 'Currying'.
+  - titulo: Currying
+    txt:
+      - |
+        En JavaScript, ¿Cómo podriamos simular funciones de 2 a más parámetros siguiendo
+        esta regla?
+      - |
+        $
+        const sumar = num1 => {
+            return num2 => num1 + num2;
+        };
+
+        sumar(10)(20);  // 30
+      - |
+        Así que por eso vimos Closures. Usando funciones con un solo parámetro,
+        conseguimos simular una función de 2 parámetros.
+        <br>
+        <br>
+        Podemos simplificar la función aun más, gracias al comportamiento de las funciones
+        flecha.
+      - |
+        $
+        const sumar = num1 => num2 => num1 + num2;
+
+        sumar(10)(20);  // 30
+      - |
+        'sumar' toma un número, y devuelve una función. Esta nueva función toma un número,
+        y nos devuelve el resultado. Por eso hay que llamar la función de esa forma:
+      - |
+        $
+        sumar(10);     // Es una función 'num2 => 10 + num2'
+        sumar(10)(20); // El resultado, 30
+      - |
+        Podemos crear funciones de tantos parámetros queramos:
+      - |
+        $
+        const sumar3Numeros = x => y => z => x + y + z;
+        sumar3Numeros(5)(10)(15); // 30
+
+        const sumar4Numeros = w => x => y => z => w + x + y + z;
+        sumar4Numeros(2)(4)(8)(16); // 30
+      - |
+        Volvamos a Modoki.
+        <br>
+        <br>
+        En Modoki podemos tener funciones con más de un parámetro y cumplir la regla
+        que mencionamos gracias al Currying.
+        <br>
+        Currying es una técnica que permite al compilador transformar una función con
+        varios parámetros a una serie de funciones con solo un parámetro.
+        Es más fácil entenderlo con un ejemplo.
+        <br>
+        <br>
+        Tenemos nuestra función 'sumar' que simplemente suma 2 números.
+      - |
+        $
+        // Num -> Num -> Num
+        fun sumar x y = x + y
+
+        sumar 10 20  // 30
+      - |
+        El compilador, sin que nosotros lo sepamos, reescribe la función para que se
+        vea así:
+      - |
+        $
+        // Num -> (Num -> Num)
+        fun sumar x =     // Solo un parámetro
+            fn y -> x + y  // Fun. anónima con un parámetro
+
+        sumar 10 20 // Llamamos a la función de la misma manera.
+            // 30
+      - |
+        Así, todas las funciones siempre tienen un parámetro.
+        <br>
+        <br>
+        Igualmente, con tres, cuatro, cinco, etc. parámetros.
+      - |
+        $
+        // Num -> Num -> Num -> Num
+        fun sumar3Numeros x y z = x + y + z
+
+        // El compilador reescribe a
+        fun sumar3Numeros x =
+            fn y ->
+                fn z ->
+                    x + y + z
+
+        sumar3Numeros 2 4 8 // 14
+  - titulo: SIgnatura de Currying
+    txt:
+      - |
+        Como todas las funciones están 'curradas', es de vital importancia entender
+        las signaturas.

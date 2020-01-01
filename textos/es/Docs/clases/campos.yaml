@@ -1,0 +1,90 @@
+titulo: Campos
+txt:
+  - |
+    Los campos (o atributos en otros lenguajes) tienen un comportamiento diferente en Modoki.
+subtemas:
+  - titulo: Campo por defecto
+    txt:
+      - |
+        En ocasiones queremos que un campo tenga un valor por defecto cada vez que se crea una
+        instancia de la clase. Por ejemplo, queremos que todos los gatos tengan 7 vidas al inicio.
+        Entonces hacemos lo siguiente:
+      - |
+        $
+        clase Gato
+
+            campo vidas = 7
+
+      - |
+        Hemos creado el campo vidas y le hemos asignado 7. Gracias a la inferencia de tipos no
+        necesitamos especificar su tipo de dato (aunque podiamos haberlo hecho).
+
+  - titulo: Campo inicializado en el constructor
+    txt:
+      - |
+        El resto del tiempo seguramente quisieramos inicializar nuestros campos en el costructor.
+        En este caso, no podemos omitir el tipo de dato.<br>
+        Por ejemplo, este código no funciona:
+      - |
+        $
+        clase Gato
+
+            campo nombre // &larr; Error.
+
+            constructor nombre =
+                @nombre = nombre
+
+      - |
+        El campo 'nombre' podría ser de cualquier tipo. Para evitar ambigüedad
+        necesitamos especificar el tipo de dato:
+      - |
+        $
+        clase Gato
+
+            campo nombre: Txt // OK.
+
+            constructor nombre =
+                @nombre = nombre
+
+
+  - titulo: Privados y mutables por defecto
+    txt:
+      - |
+        Ya que POO se basa en la idea de encapsulación, los campos son privados por defecto.
+        En el ideal de POO los clientes de una clase u objeto no tienen por qué saber
+        detalles de implementación.<br>
+        <br>
+        En cuanto a la mutabilidad, en Modoki (pretendemos) usar las clases para realizar
+        manejo de state antes que estructurar el programa. Por ello, para evitarn escribir
+        ´mut´ para cada campo, creamos la palabra clave ´campo´.<br>
+        <br>
+        Por supuesto, los campos pueden ser de cualquier tipo. Veamos unos ejemplos:
+      - |
+        $
+        clase Ejemplo
+
+            campo nombre: Txt
+            campo edad: Num
+            campo coordenada: (Num, Num)
+            campo gato: Gato
+            campo aplicar: () -> ()
+
+            campo puntaje: Num?
+  - titulo: Getters y Setters
+    txt:
+      - >
+        Modoki no cuenta con sintaxis especial para Getters/Setters. Esta es una desición de
+        diseño del lenguaje, pues todo cambio hacia las clases debe realizarse a través de los
+        métodos públicos.
+        <br>
+        <br>
+        Mas allá de eso, cuando hacemos un campo público (usando ´pub´) sucede lo siguiente:
+        <br>
+        - El campo es accesible desde fuera de la clase<br>
+        - El campo no es modificable desde fuera de la clase<br>
+        En cierto modo, declarar un campo público significa crear un getter básico.
+      - |
+        $
+        clase Ejemplo
+
+            campo pub nombre: Txt

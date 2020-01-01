@@ -1,0 +1,16 @@
+titulo: Introducción
+txt:
+  - |
+    En el mundo de POO existe una cantidad inmensa de información. Cuando uno aprende POO, no solo aprende
+    sobre clases, objetos, herencia, polimorfismo. Estos conceptos, aunque útiles, presentan una gran
+    cantidad de problemas (que los detractores de POO han sido ávidos a señalar).
+    <br>
+    Ademas de ello hay que aprender sobre encapsulación, modularización. Estos, de nuevo, cuentan con
+    sus problemas.
+    <br>
+    Es así que, para resolver esas deficiencias, se crean los principios SOLID. Una vez más, con
+    deficiencias. Se crean los patrones de diseño, contratos, aspectos, etc.
+    <br>
+    <br>
+    <br>
+    Modoki intenta reducir estos problemas al mínimo.

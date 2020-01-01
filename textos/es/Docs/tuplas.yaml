@@ -1,0 +1,184 @@
+titulo: Tuplas
+txt:
+  - >
+    Las tuplas nos permiten agrupar varios elementos con diferentes tipos.
+    Aunque suenan similares a los Arrays de JS, las tuplas son estrictas, y no dan
+    lugar a confesiones.
+subtemas:
+  - titulo: Creación
+    txt:
+      - >
+        Veamos un ejemplo de una tupla. Esta tupla tiene 3 elementos: un Txt, un Num
+        y un Bool
+      - |
+        $
+        sea miTupla = ("Hola", 100, false)
+        miTupla[0] // "Hola"
+        miTupla[1] // 100
+        miTupla[2] // false
+      - >
+        ¡Como si fuera un Array! En vez de agrupar los elementos con corchetes, lo
+        hacemos con parentesis.
+        <br>
+        <br>
+        Ahora veamos como es su signatura:
+      - |
+        $
+        sea miTupla:  (Txt, Num, Bool)  = ("Hola", 100, false)
+      - >
+        La signatura es bastante intuitiva.
+        <br>
+        <br>
+        Las tuplas pueden tener de 2 a más elementos. Veamos más ejemplos.
+      - |
+        $
+        sea t1: (Num, Num) = (100, 200)
+        sea t2: (Txt, Bool) = (-34556, false)
+        // Intenta averiguar la signatura de estos
+        sea t3 = ("Hola", " ", "mundo")
+        sea t4 = (false, "false", "false, false")
+        sea t5 = ((100, 200), false) // Tupla anidada
+        sea t6 = (false, (1, 0, 1), (false, 1, "A"), false)
+
+        sea pedro = ("Pedro", "Ramirez", 25)
+        sea javier = ("Javier", "Alducar", 33)
+        sea laura = ("Laura", "Pereda", 28)
+  - titulo: Seguridad
+    txt:
+      - >
+        La diferencia entre tuplas y Arrays es que son más estrictas. Ya que tienen una
+        signatura definida, no podemos asignar datos que no correspondan.
+      - |
+        $
+        // (Nombre, Apellido, Edad)
+        sea persona:  (Txt, Txt, Num)  = ("Pedro", 25, "Ramirez") // Error. Se esperaba
+          // un Txt en el segundo campo, pero se recibió un Num.
+
+        sea persona2: (Txt, Txt, Num)  = ("Pedro", "Ramirez") // Error. persona2 define
+          // 3 campos, pero solo se encontraron 2.
+
+        // Intentar extraer un campo que no existe
+        sea tupla = (10, 20)
+        tupla[2] // Error. tupla no tiene un tercer campo.
+      - >
+        Como puedes ver, no podemos asignar datos erroneos.
+  - titulo: Pattern Matching
+    txt:
+      - >
+        Veamos como funciona Pattern Matching con las tuplas. Trataremos Pattern
+        Matching a fondo más adelante.
+        <br>
+        <br>
+        Supongamos que tenemos la siguientes tuplas:
+      - |
+        $
+        sea procesador = ("Intel", "Core i9", "9900K")
+      - >
+        Y queremos extraer sus datos:
+      - |
+        $
+        sea marca  = procesador[0]
+        sea linea  = procesador[1]
+        sea modelo = procesador[2]
+      - >
+        Extraerlos así es molesto y repetitio. Podemos usar Pattern Matching para hacerlo
+        más fácil:
+      - |
+        $
+        sea (marca, linea, modelo) = procesador
+      - >
+        Es una forma más sencilla de extraer datos de una tupla.
+        <br>
+        <br>
+        Sin embargo, es necesario que el patron coincida con la tupla:
+      - |
+        $
+        // No nos importa el modelo
+        sea (marca, linea) = procesador // Error. El patron (marca, linea) no coincide
+          // con la tupla (Txt, Txt, Txt).
+      - >
+        Para "ignorar" algunos campos, se usa el identificador `_`
+      - |
+        $
+        // Usamos '_' para ignorar un dato.
+        sea (marca, linea, _) = procesador // OK
+
+        console.log marca // "Intel"
+        console.log linea // "Core i7"
+        console.log _     // Error. El identificador '_' se usa para ignorar un valor,
+          // por lo tanto, no tiene valor.
+
+
+        // No nos importa la marca
+        sea (_, linea, modelo) = procesador
+      - >
+        Otro uso de Pattern Matching con tuplas es para declarar varios valores a la vez,
+        similar a como se haría en JS
+      - |
+        $
+        sea (marca, modelo, precio) = ("AMD", "9950x", 800)
+  - titulo: Tupla con solo 1 elemento
+    txt:
+      - >
+        Las tuplas pueden tener de 2 a más elementos, pero, ¿Qué pasa si solo ponemos
+        un elemento?
+      - |
+        $
+        sea tupla = (100)
+        console.log tupla[0] // Error. 'tupla' no es una tupla o array.
+      - >
+        Lo que sucede es que encerrar una sola expresión en parentisis simplemente
+        la agrupa. Es equivalente a lo siguiente:
+      - |
+        $
+        sea tupla = (100)
+        sea tupla = 100
+
+        sea numero = (50 + 100)
+        sea numero = 50 + 100
+      - >
+        De todos modos una tupla con solo 1 elemento no sería util ; )
+  - titulo: La tupla vacia
+    txt:
+      - |
+        $
+        // - ¿Y que hay de la tupla vacia ()?
+        // - Pues... Es complicado.
+      - >
+        La tupla vacia guarda relación con los Tipos Indeterminados y null/void/undefined.
+        A continuación daremos una explicación sencilla.
+        <br>
+        <br>
+        Los parentesis se usan para agrupar cosas. Si abrimos y cerramos parentesis,
+        es como si estuvieramos agrupando "la nada".
+      - |
+        $
+        sea nada = () // ¡Mira mamá, estoy agrupando la nada!
+      - >
+        Así que en cierto sentido, la constante 'nada' almacena, pues, nada.
+        <br>
+        Y los programadores están familiarizados con el concepto de 'nada' pues es lo
+        que llamamos null/void/undefined/nil.
+        <br>
+        <br>
+        Sin embargo, aun no podemos usarlos como reemplazo de null/undefined.
+        El siguiente código no compilará:
+      - |
+        $
+        sea noEsUnNumero: Num = () // Error. No se puede asignar () a Num
+      - >
+        Pero lo siguiente si:
+      - |
+        $
+        sea noEsUnNumero: Num? = () // OK
+      - >
+        Pero ahora no podemos usarlo como un numero normal
+      - |
+        $
+        sea resultado = noEsUnNumero + 50 // Error. El operador '+' solo opera con Num,
+          // pero se encontró un Num?.
+      - >
+        De todos modos esa operación iba a fallar ¯\_(ツ)_/¯
+        <br>
+        Para saber cómo usar la tupla vacía, ve a la sección Tipos Indeterminados.
+        

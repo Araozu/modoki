@@ -1,0 +1,51 @@
+titulo: Parametros
+txt:
+    - >
+        Puede que al aprender sobre funciones, hayas intentado hacer una función de 2 o más
+        parámetros, pero no supiste cómo. Ahora veremos ello.
+subtemas:
+    -   titulo: Funciones Puras
+        txt:
+            - >
+                Volvemos a hablar de funciones puras. Una función pura siempre tiene una entrada
+                y un retorno. No puede tener 2 entradas o devolver 2 cosas, siempre 1.<br>
+                <br>
+                ¿Acaso eso no es un problema? Pues no, exíste una forma de tener funciones con más
+                de un parámetro, y resulta ser una característica muy útil en los lenguajes
+                funcionales. Sin embargo, es algo compleja, y necesita su propia sección.<br>
+                <br>
+                La técnica se llama currying, por cierto.
+    -   titulo: Necesito funciones de varios parámetros ahora.
+        txt:
+            - >
+                Busquemos una solución que no involucre currying. ¿Qué te parece lo sig?
+            - |
+                $
+                fun sumar: (Num, Num) numeros -> Num =
+                    sea (num1, num2) = numeros
+                    num1 + num2
+
+                sumar (10, 20) // 30
+            - >
+                Descifremos la función. Por supuesto, su nombre es 'sumar'. Veamos su signatura:
+            - |
+                $
+                (Num, Num) numeros -> Num
+            - >
+                Toma como entrada una tupla de 2 números (Num, Num) con nombre 'numeros', y devuelve
+                un Num. 1 entrada, 1 salida.
+            - |
+                $
+                sea (num1, num2) = numeros
+                num1 + num2
+            - >
+                La primera linea es lo más importante. Allí se usa pattern matching para extraer los
+                dos valores de la tupla, y asignarlos a num1 y num2.<br>
+                <br>
+                Finalmente, se usan esos valores, y se devuelve num1 + num2
+            - |
+                $
+                sumar (10, 20)
+            - >
+                Llamar esta función es similar a JS, ¿verdad? La diferencia es que no son 2
+                parámetros, sino uno solo. No son 2 Num, es una tupla de 2 Num

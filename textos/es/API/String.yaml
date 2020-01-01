@@ -1,0 +1,42 @@
+nombre: String
+descripcion:
+  - |
+    Tipo de dato primitivo para almacenar una cadena de caracteres.
+funciones:
+  - nombre: fromCharCode
+    signatura: "fun fromCharCode (nums: ...Num) -> Txt"
+    descripcion: |
+      Devuelve un Txt creado a partir de los códigos UTF-16 contenidos en ´nums´.
+  - nombre: fromCodePoint
+    signatura: "fun fromCodePoint (nums: ...Num) -> Txt"
+    descripcion: |
+      Devuelve un Txt creado a partir de los code points contenidos en ´nums´.
+  - nombre: charAt
+    signatura: "metodo charAt (pos: Num) -> Txt"
+    descripcion: |
+      Devuelve el caracter en la posición ´pos´ como Txt. Si la posición es inválida devuelve
+      un Txt vacio.
+  - nombre: charCodeAt
+    signatura: "metodo charCodeAt (pos: Num) -> Num"
+    descripcion: |
+      Devuelve el código UTF-16 del caracter en la posición ´pos´.
+  - nombre: codePointAt
+    signatura: "metodo codePointAt (pos: Num) -> Num"
+    descripcion: |
+      Devuelve un ´Num´ entero que es el code point UTF-16 del caracter en la posicion ´pos´.
+  - nombre: concat
+    signatura: "metodo concat (txt: ...Txt) -> Txt"
+    descripcion: |
+      Concatena el texto actual a todos los Txt que contenga ´txt´ y devuelve el resultado.
+  - nombre: includes
+    signatura: "metodo includes (txt: Txt) -> Bool"
+    descripcion: |
+      Busca ´txt´ dentro del Txt actual.
+  - nombre: endsWith
+    signatura: "metodo endsWith (txt: Txt) -> Bool"
+    descripcion: |
+      Determina si el texto actual termina con los mismos caracteres de ´txt´.
+  - nombre: indexOf
+    signatura: "metodo indexOf (txt: Txt) -> Num"
+    descripcion: |
+      Busca ´txt´ en el Txt actual y devuelve su posición, o ´-1´ si no lo encuentra.

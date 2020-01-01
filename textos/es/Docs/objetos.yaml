@@ -1,0 +1,32 @@
+titulo: Objetos
+txt:
+  - >
+    Los objetos son la piedra angular de JavaScript, y no pierden ninguna de sus
+    caracteristicas en Modoki.
+  - |
+    $
+    sea persona =
+        nombre := "John"
+        apellido := "Doe"
+        edad := 50
+
+    // O, con llaves
+    sea persona' = {nombre := "John", apellido := "Doe", edad := 50}
+
+  - >
+    Una diferencia importante es que en Modoki las propiedades de un objeto son
+    inmutables por defecto. No es posible hacer lo siguiente:
+  - |
+    $
+    console.log persona.nombre // John
+    persona.nombre = "Max" // Error. nombre es inmutable
+  - >
+    Para tener campos mutables, se usa la palabra clave 'mut' (por ahora)
+  - |
+    $
+    sea persona' =
+        mut nombre := "John"
+        apellido := "Doe"
+        edad := 50
+
+    persona'.nombre = "Max" // Ok

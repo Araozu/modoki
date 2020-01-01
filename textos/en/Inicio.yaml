@@ -1,0 +1,72 @@
+motto: Safe programming language for lazy programmers.
+influencia: >
+    Modoki Lang has borrowed ideas from: Scala, Haskell, F#, ReasonML, TypeScript, OCaml, Kotlin,
+    CoffeeScript, C#, C++ (and more coming soon) to become what you can see before you.
+caracteristicas:
+    You gonna hate it:
+        texto: >
+            Modoki is an Imperative, Functional (impure), Procedural, and Object Oriented monster.
+            With strong opinions on how to program, you will feel opressed.<br>
+            <br>
+            Also, the language itself is in Spanish. Good luck with that.
+        codigo: |
+            fun rec fib n =
+              cuando n es
+              | 0 => 0
+              | 1, 2 => 1
+              | _ => fib (n - 2) + fib (n - 1)
+    Functional first:
+        texto: >
+            ¡There are no variables!<sup>*</sup> Only constants, no loops, no iterations, etc.<br>
+            You will have a hard time...<br>
+            <br>
+            <p style="font-size: 17px">* Okay, there are variables. But you must write <i>mut</i> to use them.
+            How awful.</p>
+        codigo: |
+            sea num1 = 20
+            num1 = 30 // Error! You told me num1 was 20, now you say is 30.
+                      // Are you a liar?
+
+            sea mut num2 = 20
+            num2 = 30 // Not gonna complain.
+    Indent-based:
+        texto: >
+            Who wants all those brackets, parentheses, colons and semi-colons? Puaj.<br>
+            <br>
+            Now <b>this</b> is beautiful.
+        codigo: |
+            sea age = 20
+            sea name = "Pedro"
+            sea status =
+              si name es "Pedro" and age > 18
+                "legal"
+              sino
+                "illegal"
+
+            impr "Yo ${name}, you are ${age} y/o, and ${status}."
+    We make OOP harder:
+        texto: >
+            You'll stop using OOP, as is <b>*so*</b> verbose.<br>
+            <br>
+            Look out how many lines just to make a Cat purr in an OO style.<br>
+            <br>
+            <p style="font-size: 12px">I love you, Brian Will.</p>
+        codigo: |
+            clase abierta Animal =
+              campo name: txt
+
+              constructor de name
+
+            clase Cat: Animal =
+              constructor: txt name -> @ =
+                super name
+
+              metodo purr: () -> () =
+                impr "Prrr"
+
+            sea cat1 = Cat "Apache"
+            gato1.purr () // Prrr
+docs:
+    texto: Not mind-blown yet? Take a look at the documentation, and I promise you will.
+    tal vez no: Or maybe you know functional programming already, so...
+    texto link: Take me to the docs.

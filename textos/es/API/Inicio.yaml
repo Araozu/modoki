@@ -1,0 +1,92 @@
+nombre: Std
+descripcion:
+  - >
+    Funciones, constantes, módulos y clases base de JavaScript y Modoki. Abierto por defecto.
+modulos:
+  - nombre: String
+    ruta: Std.String
+    descripcion:
+      - >
+        String contiene funciones relacionadas al manejo de Strings.
+operadores:
+  - nombre: <>
+    ruta: Std.(<>)
+    signatura: "fun (<>)  (t1: Txt) (t2: Txt) -> Txt"
+    descripcion: Operador que concatena dos ´Txt´.
+    params:
+      - nombre: t1
+        descripcion: Primer texto
+      - nombre: t2
+        descripcion: Segundo texto
+      - nombre: res
+        descripcion: Los dos textos concatenados
+    peros:
+      - "Ambos ejemplos son equivalentes:"
+      - '"Hola" <> " mundo"'
+      - (<>) "Hola" " mundo"
+  - nombre: +
+    ruta: Std.(+)
+    signatura: "fun (+)  (n1: Num) (n2: Num) -> Num"
+    descripcion: Operador que suma dos ´Num´.
+    params:
+      - nombre: n1
+        descripcion: Primer número
+      - nombre: n2
+        descripcion: Segundo número
+      - nombre: res
+        descripcion: La suma de los dos números
+    peros:
+      - >
+        Este operador siempre suma números, nunca concatena textos.
+        Si deseas concatenar dos textos, usa el operador (<>)
+  - nombre: "|>"
+    ruta: Std.(|>)
+    signatura: "fun (<|)  (funcion: 'a -> 'b) (param: 'a) -> 'b"
+    descripcion: |
+      Función que aplica otra función.
+      Invoca a ´funcion´ con el parametro ´param´.
+  - nombre: "<|"
+    ruta: Std.(<|)
+    signatura: "fun (|>)  (param: 'a) (funcion: a -> b) -> b"
+    descripcion: |
+      Función inversa a ´(<|)´. Invoca a ´funcion´ pasandole como parámetro ´param´.
+  - nombre: ">>"
+    ruta: Std.(>>)
+    signatura: |
+      fun (>>)  (fun1: 'a -> 'b) (fun2: 'b -> 'c) -> ('a -> 'c)
+    descripcion: |
+      Compone las funciones ´fun1´ y ´fun2´, creando una nueva función.
+funciones:
+  - nombre: "parseInt"
+    ruta: Std.parseInt
+    descripcion: Intenta convertir ´texto´ a un numero.
+    signatura: "fun parseInt (texto: Txt) -> Num?"
+    params:
+  - nombre: setTimeout
+    ruta: Std.setTimeout
+    signatura: "fun setTimeout (ejecutor: () -> ()) (retraso: Num) -> Timeout"
+    descripcion: |
+      Ejecuta la función ´ejecutor´ tras un mínimo de ´retraso´ segundos, y devuelve
+      un objeto con información de esta tarea.
+  - nombre: setInterval
+    ruta: Std.setInterval
+    signatura: "fun setInterval (ejecutor: () -> ()) (retraso: Num) -> Interval"
+    descripcion: |
+      Ejecuta la función ´ejecutor´ cada ´retraso´ segundos, y devuelve
+      un objeto con información de esta tarea.
+  - nombre: clearInterval
+    ruta: Std.clearInterval
+    signatura: "fun clearInterval (intervalo: Interval) -> ()"
+    descripcion: Detiene un intervalo creado por ´setInterval´.
+constantes: {}
+objetos: {}
+variantes: {}
+tipos:
+  - signatura: def Txt = String
+    ruta: Std.Txt
+  - signatura: def Num = Number
+    ruta: Std.Num
+  - signatura: def Number
+    ruta: Std.Number
+registros: {}
+gestores: {}

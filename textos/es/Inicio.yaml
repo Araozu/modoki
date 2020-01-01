@@ -1,0 +1,86 @@
+motto: Lenguaje seguro para programadores perezosos.
+influencia: >
+    Inspirado en los grandes, Modoki no es solo un lenguaje más. Es una nueva forma de programar.
+caracteristicas:
+    Solo para valientes:
+        texto: |
+            Aprender toda una nueva sintaxis es complicado y molesto, pero a cambio ganas
+            consistencia y productividad inigualables.
+            <br>
+            <br>
+            Ademas, ¿No te gustaría entender que pasa aquí?
+        codigo: |
+            // Quick sort en 5 lineas
+            fun qsort []      = []
+            fun qsort (x::xs) =
+                qsort (Array.filter (<x) xs)
+                ++ [x]
+                ++ qsort (Array.filter (>x) xs)
+    No aprendas otra stdlib:
+        texto: >
+            Tras aprender la sintaxis, estas listo para trabajar. Usa todas las funciones,
+            clases, objetos y operadores que ya conoces, de forma segura.
+        codigo: |
+            sea tabla1 = document.getElementById "tabla-uno" ?:
+                sea elem = document.createElement "table"
+                elem.id = "tabla-uno"
+                document.body.appendChild elem
+                elem
+
+            tabla1.style.color = "#06060a"
+
+    No compliques tu código:
+        texto: >
+            Trabaja de forma segura con tipos de datos estrictos, y con la versatilidad
+            de JavaScript.<br>
+            Anotaciones innecesarias.
+        codigo: |
+            fun imprPersona p =
+                console.log "${p.nombre} tiene ${p.edad} años."
+
+            sea juan =
+                nombre := "Juan"
+                edad := 24
+
+            sea hoja =
+                forma := "A4"
+
+            imprPersona juan // Juan tiene 25 años.
+            imprPersona hoja // Error. hoja no tiene los campos nombre: Txt y edad: Num
+
+    No evites trabajos asíncronos:
+        texto: >
+            Modoki cuenta con sintaxis especial para trabajar asíncronamente, para que
+            nunca más uses callbacks/promesass/await.
+        codigo: |
+            sea datos = fetch! "/usuarios" |> Response.json!
+
+    No más 'undefined is not a function':
+        texto: >
+            Ten la certeza de que tus datos existen siempre,
+            y cuando quieras un null/void/undefined, ten la certeza
+            de que no podras olvidarte de manejarlo.
+        codigo: |
+            fun sumar x y = x + y
+
+            sea existe = 100
+            sea talVezExiste: Num? = () // equivalente a null/undefined
+
+            sumar existe talVesExiste // Error. Se esperaba un Num, pero se obtuvo Num?
+    No más 'this':
+        texto: >
+            Uno de los mayores dolores de cabeza, this, no existe en Modoki.
+            Deja que el compilador se encargue por ti.
+        codigo: |
+            sea juan =
+                nombre := "Juan"
+                apellido := "Perez"
+                imprNombreCompleto := fn () ->
+                    console.log "${nombre} ${apellido}"
+
+            juan.imprNombreCompleto () // Juan Perez
+
+docs:
+    texto: ¿Aun no te explota la cabeza? Echa un vistazo a la documentation, y te prometo que sucederá.
+    tal vez no: O tal vez ya sabes qué es programación funcional, en cuyo caso...
+    texto link: A la documentación.

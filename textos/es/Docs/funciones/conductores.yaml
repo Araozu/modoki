@@ -1,0 +1,85 @@
+titulo: Conductores
+txt:
+  - |
+    Los conductores (pipes en ingles) son operadores muy útiles en programas con mayor
+    complejidad. Nos permiten organizar nuestro código y eliminar aun más parentesis.
+subtemas:
+  - titulo: Conductor izquierdo
+    txt:
+      - |
+        Veamos de qué trata el conductor izquierdo. Cuando realizas muchas llamadas
+        a funciones, el codigo suele quedar así:
+      - |
+        $
+        sea resultado = fun3 (fun2 (fun1 dato))
+      - |
+        y de pronto el código es difícil de leer. Para eso se creó el operador conductor.
+        Veamos un ejemplo más simple.
+      - |
+        $
+        // Con parentesis
+        sea resultado = fun1 dato
+
+        // Con conductor
+        sea resultado = dato |> fun1
+      - |
+        El operador ´|>´ conduce un dato a una función. Aunque no se ve bien con una
+        sola función, en el ejemplo anterior vemos una mejora significativa:
+      - |
+        $
+        sea resultado = dato |> fun1 |> fun2 |> fun3
+      - |
+        Pasamos ´dato´ a ´fun1´, el resultado va hacia ´fun2´, y finalmente a ´fun3´.
+        <br>
+        Este operador es bastante común y útil.
+  - titulo: Conductor derecho
+    txt:
+      - |
+        El conductor derecho realiza lo mismo que el conductor izquierdo, pero en sentido
+        contrario.
+      - |
+        $
+        sea ejemploSencillo = fun1 <| dato
+        
+        sea ejemploComplejo = fun3 <| fun2 <| fun1 <| dato
+      - |
+        Algo que notarás es que no se usa el conductor (sea derecho o izquierdo) en la
+        primera función.
+      - |
+        $
+        // En vez de
+        dato |> fun1 |> fun2
+
+        // Se escribe
+        fun1 dato |> dato
+      - |
+        Aquí hay ejemplos de código con y sin conductores.
+      - |
+        $
+        console.log ("Hola " <> "Mundo!")
+
+        console.log <| "Hola " <> "Mundo!"
+      - |
+        $
+        sumar 10 (Math.random () * 20)
+
+        sumar 10 <| Math.random () * 20
+      - |
+        $
+        document.body.setAttribute "color" (
+            si Math.random() < 0.5 -> "rojo"
+            sino -> "azul"
+        )
+
+        document.body.setAttribute "color"
+            <| si Math.random < 0.5 -> "rojo"
+               sino "azul"
+      - |
+        $
+        sea num = elevarAlCuadrado (sumar20 (elevarAlCuadrado (dividir2 (Math.random () * 100))))
+
+        sea num = Math.random () * 10
+          |> dividir2
+          |> elevarAlCuadrado
+          |> sumar20
+          |> elevarAlCuadrado

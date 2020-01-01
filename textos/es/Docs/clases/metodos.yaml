@@ -1,0 +1,79 @@
+titulo: Métodos
+txt:
+  - >
+    Los métodos en Modoki son 'funciones con contexto'. Tienen acceso a todos los atributos de
+    la clase a la que pertenecen, y pueden mutar el estado de esta.
+subtemas:
+  - titulo: Creacion
+    txt:
+      - >
+        Los métodos se crean con la palabra clave ´met´, y tienen la misma sintaxis que una
+        función.
+      - |
+        $
+        clase Gato
+
+            campo nombre: Txt
+            campo vidas: Num
+
+            constructor nombre vidas
+
+            met pub maullar () =
+                console.log "Miau"
+
+      - |
+        $
+        sea apache = Gato "Apache" 7
+
+        apache.maullar ()  //: Miau
+  - titulo: This
+    txt:
+      - >
+        Para acceder a los campos de la clase es necesario hacer referencia a this.
+        Para ello, en vez de escribir ´this.campo´ en Modoki escribimos ´@campo´:
+      - |
+        $
+        clase Gato
+
+            campo nombre: Txt
+            campo vidas: Num
+
+            constructor nombre vidas
+
+            met pub maullar () =
+                console.log "Miau"
+
+            met restar1Vida () =
+                sea vidasActuales = @vidas  // Obtenemos el campo vidas
+                @vidas = vidasActuales - 1  // Modificamos el campo
+
+      - |
+        $
+        sea apache = Gato "Apache" 7
+
+        apache.maullar ()  //: Miau
+  - titulo: Modificadores de acceso
+    txt:
+      - >
+        Los métodos siguen las mismas reglas de acceso que los módulos.
+        <br>
+        <br>
+        - Los métodos son privados por defecto.<br>
+        - Los métodos son públicos con la palabra clave ´pub´.<br>
+        - Los métodos son protegidos con la palabra clave ´prot´ (sujeto a cambios).<br>
+      - |
+        $
+        clase Ejemplo
+
+            met metodo1 () =
+                console.log "Este método es privado."
+
+            met pub metodo2 () =
+                console.log "Este método es público"
+
+            met prot metodo3 () =
+                console.log "Este método es protegido."
+
+        sea claseEjemplo = Ejemplo ()
+        claseEjemplo.metodo1 ()       //  Error, metodo1 es privado
+        claseEjemplo.metodo2 ()       //: Este método es público

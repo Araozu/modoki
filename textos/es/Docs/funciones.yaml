@@ -1,0 +1,74 @@
+titulo: Funciones
+txt:
+  - |
+    Como habrás adivinado, las funciones son importantes en la programación funcional.
+    Ahora veremos un poco de ellas, y en las siguientes secciones las estudiaremos
+    a más profundidad.
+subtemas:
+  - titulo: Como llamar una función
+    txt:
+      - |
+        Esta sección tal vez sea la más importante de toda la documentación, pues es
+        impensable programar algo útil sin usar ninnguna función.
+        <br>
+        <br>
+        Veamos como llamar una funcion simple como console.log
+      - |
+        $
+        console.log "Hola mundo!"
+      - |
+        No usamos parentesis, simplemente colocamos el parámetro despues del nombre de
+        la función.
+        <br>
+        <br>
+        ¿Qué tal si queremos concatenar varios Txt e imprimirlos en una sola linea?
+      - |
+        $
+        console.log ("Hola " <> "Mundo!") // Hola Mundo!
+
+        console.log "Hola " <> "Mundo!"   // Error. El operador <> opera con Txt, pero se
+          // encontró un ().
+      - |
+        La primera linea nos muestra cómo hacerlo. Primero encerramos en parentesis la
+        concatenación para que se ejecute. Podemos agrupar cualquier tipo de expresión.
+        <br>
+        <br>
+        La segunda linea es donde hay un problema. Es un problema extraño, ¿verdad?
+        <br>
+        Lo que sucede es que llamar a una función tiene mayor prioridad que usar un
+        operador. En otras palabras, es como si hicieramos:
+      - |
+        $
+        (console.log "Hola ") <> "Mundo!"
+      - |
+        Eso produce el error. Así que, agrupa adecuadamente tus operaciones.
+  - titulo: Llamar funciones de 2 a mas parámetros
+    txt:
+      - |
+        Para hacerlo, simplemente coloca los parametros en orden, separados por espacios.
+      - |
+        $
+        Math.pow 3 4      // 81
+        parseInt "FF" 16  // 255
+
+        // Funciones hipoteticas
+        fun3params 10 20 30
+        fun3params 10 20 30 40
+      - |
+        Lo mencionado anteriormente aplica tambien. Si quieres realizar operaciones debes
+        agruparlas con parentesis.
+      - |
+        $
+        Math.pow (3) (4)       // 81
+        Math.pow (27 / 9) 4    // 81
+        Math.pow 3 (2 * 2)     // 81
+
+        // Puedes agrupar operaciones más complejas - aunque no lo recomiendo.
+        Math.pow (Math.sqrt 9) (Math.cos (Math.PI / 180) * 4) // 81
+      - |
+        Más adelante aprenderás como eliminar ese exceso de parentesis, y expresarlo como:
+      - |
+        $
+        Math.pow
+            <| Math.sqrt 9
+            <| (Math.cos <| Math.PI / 180) * 4

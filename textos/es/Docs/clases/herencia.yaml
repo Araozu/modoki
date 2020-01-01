@@ -1,0 +1,66 @@
+titulo: Herencia
+txt:
+  - >
+    La herencia nos permite reusar el código ya escrito y que es relevante a las clases que
+    nos encontramos escribiendo.<br>
+    <br>
+    Como es tradición, vamos a dar un ejemplo trivial
+subtemas:
+  - titulo: Declarar herencia
+    txt:
+      - >
+        La herencia se declara de la siguiente manera:
+      - |
+        $
+        clase Gato: Animal
+      - >
+        Luego del nombre de la clase colocamos dos puntos y colocamos la clase padre,
+        de forma similar a la que se anota un tipo de dato.
+  - titulo: Super
+    txt:
+      - >
+        Dentro del constructor de nuestra clase Gato necesitamos llamar al constructor de
+        nuestra clase padre, Animal. Para eso usamos ´super´.
+      - |
+        $
+        clase Animal
+
+            campo nombre: Txt
+            campo edad: Num
+
+            constructor nombre edad
+
+            met pub comer () =
+                console.log "Un animal come..."
+
+
+        clase Gato: Animal
+
+            campo vidas: Num
+
+            constructor nombre edad vidas =
+                super nombre edad
+                @vidas = vidas
+
+  - titulo: Sobreescritura
+    txt:
+      - >
+        -- Esta sección está sujeta a cambios debido a consistencia del lenguaje. --<br>
+        <br>
+        Para sobreescribir un método heredado de algun padre necesitamos mostrarlo
+        explícitamente. Para ello colocamos un signo de exclamación ´!´ luego de la palabra
+        clave met:
+      - |
+        $
+        clase Gato: Animal
+
+            campo vidas: Num
+
+            constructor nombre edad vidas =
+                super nombre edad
+                @vidas = vidas
+
+            // Sobreescribimos el método comer de Animal
+            met! pub comer () =
+                console.log "Un gato come..."
+

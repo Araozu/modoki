@@ -1,0 +1,115 @@
+titulo: Documentación
+txtIndice: Índice
+indice:
+    -   tema: Inicio
+        url: ""
+    -   tema: Tour
+        url: tour
+    -   tema: Variables
+        url: variables
+    -   tema: Tipos de datos
+        url: tipos
+    -   tema: Condicionales
+        url: condicionales
+    -   tema: Tuplas
+        url: tuplas
+    -   tema: Arrays
+        url: arrays
+    -   tema: Funciones
+        url: funciones
+        subtemas:
+            -   tema: Creación
+                url: creacion
+            -   tema: Signatura
+                url: signatura
+            -   tema: Funciones anónimas
+                url: funs-anonimas
+            -   tema: Currying
+                url: currying
+            -   tema: Aplicación Parcial
+                url: aplicacion-parcial
+            -   tema: Parámetros opcionales
+                url: parametros-opcionales
+            -   tema: Conductores
+                url: conductores
+            -   tema: Composición de funciones
+                url: composicion
+            -   tema: Operadores unarios
+                url: operadores-unarios
+            -   tema: Operadores binarios
+                url: operadores-binarios
+            -   tema: Generadores
+                url: generadores
+            -   tema: Iteradores
+                url: iteradores
+    -   tema: Objetos
+        url: objetos
+        subtemas:
+            -   tema: Creacion
+                url: creacion
+            -   tema: Acceso
+                url: acceso
+            -   tema: Tipos y anotaciones
+                url: anotaciones
+            -   tema: Mutaciones
+                url: mutaciones
+    -   tema: Genéricos
+        url: genericos
+    -   tema: Variantes
+        url: variantes
+        subtemas:
+            -   tema: Creacion
+                url: creacion
+            -   tema: Uso
+                url: uso
+            -   tema: Constructores
+                url: constructores
+            -   tema: Genericos
+                url: genericos
+    -   tema: Registros
+        url: registros
+        subtemas:
+            -   tema: Creacion
+                url: creacion
+            -   tema: Uso
+                url: uso
+            -   tema: Colision
+                url: colision
+            -   tema: Infijo
+                url: infijo
+    -   tema: Tipos sinonimos
+        url: tipos-sinonimos
+    -   tema: Clases
+        url: clases
+        subtemas:
+            -   tema: Introducción
+                url: introduccion
+            -   tema: Campos (atributos)
+                url: campos
+            -   tema: Métodos
+                url: metodos
+            -   tema: Constructor
+                url: constructor
+            -   tema: Herencia
+                url: herencia
+            -   tema: Clases abstractas
+                url: clases-abstractas
+    -   tema: Polimorfismo
+        url: polimorfismo
+        subtemas:
+            -   tema: Interfaces
+                url: interfaces
+            -   tema: Registros
+                url: registros
+            -   tema: Clases
+                url: clases
+    -   tema: Tipos indeterminados
+        url: tipos-indeterminados
+    -   tema: Errores
+        url: errores
+    -   tema: Excepciones
+        url: excepciones
+    -   tema: Módulos
+        url: modulos
+    -   tema: Asincrono
+        url: asincrono

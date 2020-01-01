@@ -1,0 +1,76 @@
+titulo: Tipos de datos básicos
+txt:
+    - >
+        Los tipos de datos son imprescindibles a la hora de construir y modelar programas,
+        nos permiten representar y agrupar comportamientos del mundo real.<br>
+        Modoki usa los mismos tipos de datos de JavaScript, con unos pequeños cambios para
+        permitir consistencia en todo el lenguaje.
+subtemas:
+    -   titulo: Números (Num)
+        txt:
+            - >
+                Num representa a number de JavaScript, y se comporta exactamente igual. También
+                utiliza los mismos operadores.
+            - |
+                $
+                sea num1 = 100
+                sea num2 = -6888.5667
+
+                num1 + num2
+                num1 - num2
+                num1 / num2
+                num1 * num2
+    -   titulo: Textos (Txt)
+        txt:
+            - >
+                Estos son los string de JS, con ciertas modificaciones. Primero, se usan
+                solo con comillas dobles ("), nunca con comillas simples (').
+            - |
+                $
+                sea txt1 = "Hola"
+                sea txt2 = "Mundo"
+
+                // Error
+                sea error = 'Hola'
+            - >
+                La interpolación se realiza con las mismas comillas dobles.
+            - |
+                $
+                sea nombre = "Juan"
+                sea apellido = "Perez"
+
+                sea nombreCompleto = "${nombre} ${apellido}" //: Juan Perez
+            - >
+                Y finalmente, la concatenación se realiza con el operador ´<>´
+            - |
+                $
+                "Hola " <> "Mundo" //: Hola mundo
+                "Esto " <> "es " <> "importante." //: Esto es importante
+            - >
+                De ese modo, no se pueden realizar operaciones problematicas.<br>
+                Las siguientes lineas te darán errores de compilación.
+            - |
+                $
+                10 + "20" // Error. `+` solo opera con Num, pero se encontró un Txt.
+                "10" + 20 // Error. &uarr;
+                10 <> "20" // Error. `<>` solo opera con Txt, pero se encontró un Num.
+                "10" <> 20 // Error. &uarr;
+    -   titulo: Booleanos (Bool)
+        txt:
+            - >
+                Igual que JS:
+            - |
+                $
+                sea booleano1 = true
+                sea booleano2 = false
+            - >
+                Tambien soportan los operadores lógicos de JS:
+            - |
+                $
+                true && false
+                true || false
+                !true
+    -   titulo: Otros
+        txt:
+            - >
+                Los tipos de datos más complejos se verán en sus respectivas secciones.

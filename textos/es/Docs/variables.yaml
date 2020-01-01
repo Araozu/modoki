@@ -1,0 +1,74 @@
+titulo: Variables
+txt:
+  - >
+    Antes de empezar a programar en el lenguaje, hay un concepto importante que aprender.
+subtemas:
+  - titulo: Constantes
+    txt:
+      - >
+        Las constantes nos permiten asociar una expresión a un nombre.
+        Para ello usamos la palabra clave ´sea´:
+      - |
+        $
+        sea nombre = "Pedro"
+
+        sea edad = 20
+
+        edad + 10  //: 30
+      - >
+        No podemos cambiar el valor de una constante:
+      - |
+        $
+        sea edad = 20
+        edad = 30      // &larr; Error. `edad` es inmutable.
+      - >
+        Todas las constantes tienen un tipo de dato. Por ejemplo edad es un numero,
+        por lo tanto su tipo de dato es ´Num´.
+        <br>
+        Modoki cuenta con inferencia de tipos, por lo que el compilador puede inferir a cuál
+        tipo de dato nos referimos:
+      - |
+        $
+        sea edad = 20  // Num - inferido
+      - >
+        Sin embargo, de vez en cuando el compilador no está 100% seguro de qué tipo inferir,
+        o simplemente nosotros queremos saber exactamente el tipo. Para ello podemos
+        anotar el tipo que deseamos:
+      - |
+        $
+        sea edad: Num = 20  // Num - anotado
+  - titulo: Variables
+    txt:
+      - >
+        Las variables tambien asocian una expresión a un nombre, pero a diferencia de las
+        constantes las variables si permiten cambiar el valor que contienen. Se declaran
+        con ´sea mut´
+      - |
+        $
+        sea mut x = 20
+
+        x = 30  // Ok.
+      - >
+        Las variables tambien tienen un tipo de dato que puede ser inferido o anotado:
+      - |
+        $
+        sea mut vocal = "A"
+        sea mut consonante: Txt = "B"
+      - >
+        Sin embargo, las variables tienen una limitación. No se pueden re-asignar a un valor
+        con un tipo diferente. Por ejemplo, no podemos asignar un Txt a un Num:
+      - |
+        $
+        sea mut miVariable = 20  // Creamos una variable de tipo Num
+
+        miVariable = "20"  // &larr; Error. Intentamos asignar un Txt a un Num
+  - titulo: Consideraciones
+    txt:
+      - >
+        Modoki es un lenguaje de programación funcional. Eso quiere decir que favorece las
+        constantes frente a las variables, y podras notar ello a medida que avances por
+        el tutorial.
+        <br>
+        <br>
+        A pesar de que Modoki mantiene varias caracteristicas propias de los lenguajes
+        imperativos, te recomendamos que evites usar estas lo más posible.

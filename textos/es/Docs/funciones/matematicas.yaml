@@ -1,0 +1,89 @@
+titulo: Funciones matemáticas
+txt:
+    - >
+        Vamos a aplicar lo que nos dicen las matemáticas a las funciones de Modoki.
+subtemas:
+    -   titulo: Programación funcional y matemática.
+        txt:
+            - >
+                La programación funcional proviene de la matemática, estas tienen varias
+                características que fp (functional programming, programación funcional) intenta
+                simular.<br>
+                <br>
+                Así que, definamos una función como lo haríamos en matemáticas, y en Modoki.
+            - |
+                $
+                // Función matemática
+                f(x) = x + 1
+
+                // Función en Modoki
+                fun f: Num x -> Num = x + 1
+            - >
+                En matemáticas la función tiene ciertas propiedades:<br>
+                <br>
+                - Todos los elementos que la función acepta como entrada son el <b>Dominio</b>.
+                <br>
+                - Todos los elementos que la función devuelve son el <b>Rango</b>.
+                <br>
+                - La función <b><i>"mapea"</i></b> (convierte) un elemento del Dominio a un
+                único elemento del Rango.<br>
+                <br>
+                ¿Y esas flechas? Son el Dominio y el Rango:
+            - |
+                $
+                Num x -> Num
+            - >
+                La función mapea un Num de nombre x a otro Num.<br>
+                O en otras palabras, toma un Num y devuelve un Num.
+    -   titulo: Predictibilidad
+        txt:
+            - >
+                Cuando digo x = 1 en matemáticas, x siempre será 1. Si hago x = 2, se resuelve
+                y llegamos a la conclusión de que x =/= 2. En Modoki pasa lo mismo. Cuando
+                declaramos un valor, simepre tendrá ese valor.<br>
+                <br>
+                ¿Y eso que tiene que ver con las funciones? Pues, que les pasa lo mismo. Volviendo
+                a matemáticas, una función f(x) = x + 1 puede usarse varias veces.<br>
+            - |
+                $
+                f(x) = x + 1
+                f(0) = 1
+                f(1) = 2
+                f(10) = 11
+                f(100) = 101
+            - >
+                Obviamente, si llamo la función con un mismo parámetro varias veces, obtengo el mismo
+                resultado:
+            - |
+                $
+                f(10) = 11 // Resultado 11.
+                f(10) = 11 // ¿11 de nuevo? No me sorprende.
+                f(10) = 11 // No me digas.
+                f(10) = 11 // ¿En esto pierdes tu tiempo?
+                f(10) = 11 // Si. Ya entendí. Gracias.
+            - >
+                ¿Podemos decir lo mismo de programación? Mira este código de<br>
+                <br>
+                <h3>JavaScript</h3>
+            - |
+                $
+                const f = x => {
+                    if (Math.random() < 0.5) return x;
+                    else return x * 2;
+                };
+
+                f(10); // 20
+                f(10); // 10
+                f(10); // 20
+                f(10); // 10
+                f(10); // 10
+            - >
+                A veces 10, a veces 20. El comportamiento de esta función es impredecible, y no
+                podemos depender de ella.<br>
+                <br>
+                En programación funcional nos deshacemos de este problema. Una <i>función pura</i>
+                siempre devolverá el mismo resultado al llamarla con el mismo parametro. Así sean
+                dos veces, mil veces, o un millon de veces.<br>
+                <br>
+                Otros lenguajes como Haskell son muy estrictos al respecto. Modoki te permite este
+                comportamiento, a discreción.

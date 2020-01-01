@@ -1,0 +1,29 @@
+titulo: Tipos sinónimos
+txt:
+  - >
+    Los tipos sinonimos son, pues, sinonimos de otros tipos. Con un ejemplo podemos verlo
+    más claramente:
+  - |
+    $
+    tipo Nombre = Txt
+  - >
+    Aquí declaramos que el tipo Nombre es equivalente a Txt. De ese modo podemos usarlo para
+    brindar claridad en nuestro código:
+  - |
+    $
+    // Creamos otro sinonimo
+    tipo Apellido = Txt
+
+    // Nombre -> Apellido -> Txt
+    fun imprimirNombreCompleto nombre apellido = nombre <> " " apellido
+  - >
+    Por supuesto, esto no sería de mucha utilidad si solo pudieramos hacer cosas simples como
+    esta.
+    Podemos abreviar el siguiente tipo compuesto:
+  - |
+    $
+    // Fn es equivalente a una función
+    tipo Fn = Nombre -> Apellido -> Txt
+
+    // Fn
+    fun imprimirNombreCompleto nombre apellido = nombre <> " " apellido

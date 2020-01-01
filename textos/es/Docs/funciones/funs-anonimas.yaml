@@ -1,0 +1,85 @@
+titulo: Funciones anónimas
+txt:
+  - |
+    Tambien conocidos como lambdas, son una herramienta bastante utilizada en el mundo
+    funcional.
+subtemas:
+  - titulo: Creación
+    txt:
+      - |
+        Para crear una función anónima escribimos 'fn', parámetros
+        separados por espacios, una flecha '->', y el cuerpo de la función.
+      - |
+        $
+        // Función anónima de 1 parámetro
+        fn x -> x + 1
+
+        // 2 params
+        fn x y -> x + y
+
+        // 3 param
+        fn x y z -> x * y * z
+
+        // etc.
+      - |
+        Ahora veremos cómo usarlos.
+  - titulo: Uso
+    txt:
+      - |
+        En lenguajes basados en identación puede ser dificil saber cómo escribir estas
+        funciones. Por eso, ejemplificaré cada posible escenario.
+        <br>
+        <br>
+        <h4>"Inline" (una linea).</h4>
+        Como dice el nombre, son funciones simples que caben en una sola linea.
+        <br>
+        Por ejemplo, si quisieramos transformar un Array de objetos de la forma
+      - |
+        $
+        {
+            nombre: Txt
+            edad: Num
+        }
+      - |
+        a un Txt con ambos datos combinados, podemos hacer esto:
+      - |
+        $
+        // El operador := es equivalente a : en objetos.
+        sea personas = [
+            {
+                nombre := "Tom"
+                edad := 25
+            },
+            {
+                nombre := "Sarah"
+                edad := 30
+            }
+        ]
+        
+        // La función anónima que usaremos
+        (fn p -> "${p.nombre} tiene ${p.edad} años.")
+
+        // En Array.map
+        Array.map (fn p -> "${p.nombre} tiene ${p.edad} años.") personas
+      - |
+        <br>
+        <h4>Complejas.</h4>
+        Si necesitas una función anónima con mayor complejidad, puede que te preguntes
+        cómo identarlo. Aquí un ejemplo:
+      - |
+        $
+        (fn persona ->
+            sea nombreCompleto = obtenerNombreCompleto persona
+            sea salario = 800 + (persona.edad ** 2 / 5)
+            "${nombreCompleto} recibe un salario de ${salario}"
+        )
+      - |
+        En un escenario más real, se haría así:
+      - |
+        $
+        fun obtenerListaSalarios personas =
+            Array.map (fn persona ->
+                sea nombreCompleto = obtenerNombreCompleto persona
+                sea salario = 800 + (persona.edad ** 2 / 5)
+                "${nombreCompleto} recibe un salario de ${salario}"
+            ) personas

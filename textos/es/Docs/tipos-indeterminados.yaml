@@ -1,0 +1,31 @@
+titulo: Tipos indeterminados
+txt:
+  - >
+    Aunque no nos gusten los errores que causan, la ausencia de datos es un concepto muy útil.
+    Solo necesitamos tener cuidado con estos (cosa que al parecer no podemos hacer).<br>
+    <br>
+    Por lo tanto, Modoki sigue el patron de los lenguajes funcionales, el cual separa los tipos
+    de datos que <b>si existen</b> de aquellos que <b>puede que no existan.</b>
+  - |
+    $
+    // Todos tienen un primer nombre.
+    sea primerNombre: Txt = "Fernando"
+
+    // Pero algunas personas no tienen un segundo nombre.
+    sea segundoNombre: Txt? = ()
+  - >
+    En el ejemplo, primerNombre es de tipo Txt porque estamos seguros de que todos tienen un
+    primer nombre.<br>
+    Sin embargo, segundoNombre es de tipo Txt? porque puede que alguien no tenga un
+    segundo nombre. Tambien observamos que se le asignó una tupla vacia. Esto es equivalente a
+    undefined en js.<br>
+    <br>
+    No nos serviría de nada simplemente cambiar 'undefined' por '()', así que la seguridad viene
+    ahora:
+  - |
+    $
+    // Intentaremos concatenar el primer y segundo nombre
+
+    sea nombreCompleto = primerNombre <> " " <> segundoNombre // Error.
+        // El operador (<>) toma como parámetros Txt y Txt, pero se intentó
+        // usar un Txt?

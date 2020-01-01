@@ -1,0 +1,19 @@
+titulo: Genéricos
+txt:
+  - >
+    Los tipos genéricos son, sin duda, un aspecto muy importante del lenguaje, y en especial de
+    programación funcional. Nos permite tener polimorfismo de forma automática, sin tener que
+    escribir código repetitivo.<br>
+    <br>
+    Veamos un ejemplo sencillo. Imaginemos que queremos una función que devuelve cualquier
+    parámetro pasado como Txt. La función tendría esta signatura:
+  - |
+    $
+    // a -> Txt
+    fun convertirATxt param = param.toString()
+
+  - >
+    La 'a' en la signatura es la parte genérica. Significa que la función acepta como parametro
+    cualquier tipo de dato, pues todos tienen toString. Podemos pensar en ello como un <T> de
+    las clases de Java.<br>
+    <br>

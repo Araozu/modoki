@@ -1,0 +1,158 @@
+titulo: Crear funciones
+txt:
+  - |
+    La creación de funciones es algo complicada de entender si no tienes experiencia
+    en programación funcional. Así que crearemos 2 funciones: Una que concatena "!"
+    a un txt, y otro que suma 2 numeros.
+subtemas:
+  - titulo: Funciones de un parámetro
+    txt:
+      - |
+        $
+        fun agregarExclamacion txt = txt <> "!"
+
+        agregarExclamacion "Hola"        // "Hola!"
+        agregarExclamacion "Bienvenido"  // "Bienvenido!"
+      - |
+        Las funciones se crean usando la palabra clave 'fun' seguido del nombre
+        de la función. Luego, los parámetros separados con espacios. En este caso solo
+        hay un parámetro, llamado 'txt'.
+        <br>
+        <br>
+        Luego, tras el signo '=' sigue el cuerpo de la función. Para que te hagas una
+        idea de como funciona, colocaré su equivalente en JS:
+      - |
+        $
+        const agregarExclamacion = txt => txt + "!";
+      - |
+        <br>
+        <br>
+        En JS, luego de una función flecha puedes omitir la palabra clave 'return'
+        si colocas una expresión. Modoki funciona igual, y como en Modoki todo es una
+        expresión, podemos remover 'return'.
+        <br>
+        Así se ve una funcion más compleja:
+      - |
+        $
+        fun crearDiv html =
+            sea elem = document.createElement "div"
+            elem.className = "texto"
+            elem.style.backgroundColor = "deepblue"
+            elem.style.color = "white"
+            elem.innerHTML = html
+
+            // Retornamos elem sin usar 'return'
+            elem
+  - titulo: Funciones de más de un parámetro
+    txt:
+      - |
+        $
+        sea sumar x y = x + y
+
+        sumar 15 25   // 40
+        sumar -30 50  // 20
+      - |
+        Las funciones con más de un parámetro se verán a fondo en Currying y Aplicación
+        Parcial.
+        <br>
+        Para crear funciones con 2 o más parámetros colocas estos en sucesión.
+        Las mismas reglas aplican.
+  - titulo: Funciones que no toman/devuelven ningún parámetro
+    txt:
+      - |
+        Ya sea console.log o Math.random, a veces necesitamos funciones que o no tomen
+        nigún parametro, o no retornen nada.
+        <br>
+        '¿Y cómo se hace?' te estarás preguntando. Nope, no se puede.
+        <br>
+        <br>
+        Solo bromeo, por supuesto que se puede.
+        <br>
+        ¿Recuerdas a la tupla vacia? Dijimos que se usa para encerrar 'nada', y así
+        representar la ausencia de datos. Pues, ya que queremos pasarle 'nada' a
+        nuestra función, eso es lo que pasaremos.
+      - |
+        $
+        // Usamos la tupla vacia como parámetro
+        fun obtenerNumero () = 100
+      - |
+        Técnicamente, obtenerNumero toma un parámetro. Pero como ese parámetro es la
+        tupla vacia, es como si no le pasaramos nada.
+        <br>
+        <br>
+        Para llamar esta función, tenemos que pasarle la tupla vacia.
+      - |
+        $
+        sea numero = obtenerNumero () // Pasamos como parámetro la tupla vacia
+        console.log numero // 100
+      - |
+        Le estamos pasando 'nada' como parámetro.
+        <br>
+        <br>
+        Así, una función que no devuelve nada en realidad devuelve la tupla vacia
+      - |
+        $
+        // Imprime un texto.
+        fun impr txt =
+            console.log txt
+            ()               // Devuelve la tupla vacia.
+
+        impr "Hola mundo!" // Hola mundo!
+      - |
+        ¿Y qué tal una función que no toma ni devuelve nada?
+      - |
+        $
+        // Imprime "hola".
+        fun imprHola () =
+            console.log "Hola!"
+            ()
+
+        imprHola () // Hola!
+      - |
+        <i>Mas no has de confiarte, pues la tupla vacia oculta muchos secretos, solo a
+        revelarse en la sección de tipos indeterminados...</i>
+  - titulo: Pattern Matching
+    txt:
+      - |
+        Puedes (y debes) usar pattern matching en los parametros de funciones.
+        <br>
+        Por ejemplo, una función que toma una tupla de 2 Num, y devuelve su suma
+        se definiría así:
+      - |
+        $
+        fun sumarTupla2 tupla = tupla[0] + tupla[1]
+      - |
+        Pero, con Pattern Matching, se hace así:
+      - |
+        $
+        fun sumarTupla2 (x, y) = x + y
+      - |
+        Puedes usarlo con todas las expresiones que soporten pattern matching.
+        <br>
+        <br>
+        Otro aspecto importante es que puedes "sobrecargar" las funciones, usando
+        pattern matching. Una función que concatena todos los Txt de un Array sería
+        así:
+      - |
+        $
+        // Si el Array está vacio
+        fun concatenarArr [] = ""
+
+        // Si existe algún elemento
+        fun concatenarArr x::xs = x <> " " <> concatenarArr xs
+
+        concatenarArr ["Hola", "Mundo", "!"]  // "Hola Mundo ! "
+  - titulo: Funciones anidadas
+    txt:
+      - |
+        Finalmente, tal vez te sea útil saber que puedes tener funciones anidadas.
+      - |
+        $
+        fun funcion1 x =
+            fun funcion2 y =
+                console.log "funcion2 llamada"
+                y * 2
+
+            console.log "funcion1 llamada"
+            sea res = funcion2 x + 10
+            res

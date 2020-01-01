@@ -1,0 +1,31 @@
+titulo: Clases abstractas
+txt:
+  - >
+    -- Sección sujeta a cambios debido a consistencia del lenguaje. --<br>
+    <br>
+    Las clases abstractas se comportan como en otros lenguajes orientados a objetos.
+subtemas:
+  - titulo: Declaración
+    txt:
+      - >
+        Para declarar una clase abstracta colocamos un signo de interrogación luego de
+        la palabra clave 'clase':
+      - |
+        $
+        clase? Animal
+
+      - >
+        Para declarar métodos abstractos hacemos lo mismo, pero luego de 'met':
+      - |
+        $
+        clase? Animal
+
+            // Método abstracto protegido
+            met? prot metodo1 = ()
+
+            // Método abstracto público
+            met? pub metodo2 = ()
+      - >
+        Por supuesto, no puedes instanciar una clase abstracta, y las clases que hereden de esta
+        están obligadas a sobreescribir los métodos abstractos, y finalmente, no podemos crear
+        métodos abstractos privados (pues nunca podríamos implementarlos).

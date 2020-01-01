@@ -1,0 +1,17 @@
+titulo: Registros
+txt:
+  - >
+    Los registros dictan una estructura para los objetos. Son similares a las interfaces de
+    TypeScript.
+  - |
+    $
+    registro Gato =
+        nombre: Txt
+        edad: Num
+        vidas: Num
+
+    // Gato - inferido
+    sea apache =
+        nombre := "Apache"
+        edad := 2
+        vidas := 7

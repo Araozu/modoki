@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Creator: CorelDRAW X7 -->
+<svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" width="84.6666mm" height="84.6666mm" version="1.1" style="shape-rendering:geometricPrecision; text-rendering:geometricPrecision; image-rendering:optimizeQuality; fill-rule:evenodd; clip-rule:evenodd"
+viewBox="0 0 8467 8467"
+ xmlns:xlink="http://www.w3.org/1999/xlink">
+ <defs>
+  <style type="text/css">
+   <![CDATA[
+    .str0 {stroke:#3E4095;stroke-width:7.62}
+    .fil6 {fill:none;fill-rule:nonzero}
+    .fil3 {fill:black}
+    .fil4 {fill:white}
+    .fil5 {fill:#FEFEFE;fill-rule:nonzero}
+    .fil1 {fill:url(#id0)}
+    .fil2 {fill:url(#id1)}
+    .fil0 {fill:url(#id2)}
+   ]]>
+  </style>
+  <linearGradient id="id0" gradientUnits="userSpaceOnUse" x1="663.52" y1="3492.42" x2="7452.88" y2="3492.42">
+   <stop offset="0" style="stop-opacity:1; stop-color:#009B63"/>
+   <stop offset="0.470588" style="stop-opacity:1; stop-color:#216D93"/>
+   <stop offset="1" style="stop-opacity:1; stop-color:#433FC4"/>
+  </linearGradient>
+  <linearGradient id="id1" gradientUnits="userSpaceOnUse" x1="101.24" y1="5405.3" x2="8365.39" y2="5405.3">
+   <stop offset="0" style="stop-opacity:1; stop-color:#433FC4"/>
+   <stop offset="0.658824" style="stop-opacity:1; stop-color:#226D94"/>
+   <stop offset="1" style="stop-opacity:1; stop-color:#009B63"/>
+  </linearGradient>
+  <linearGradient id="id2" gradientUnits="userSpaceOnUse" x1="505.91" y1="3121.98" x2="7812.56" y2="3121.98">
+   <stop offset="0" style="stop-opacity:1; stop-color:#433FC4"/>
+   <stop offset="0.188235" style="stop-opacity:1; stop-color:#226D94"/>
+   <stop offset="1" style="stop-opacity:1; stop-color:#009B63"/>
+  </linearGradient>
+ </defs>
+ <g id="Capa_x0020_1">
+  <metadata id="CorelCorpID_0Corel-Layer"/>
+  <g id="_426319736">
+   <polygon class="fil0" points="354,3412 5546,637 7965,3425 1324,5607 "/>
+   <polygon class="fil1" points="5546,637 8099,3263 839,6348 17,4759 "/>
+   <polygon class="fil2" points="17,4759 839,6348 7540,7830 8450,2981 "/>
+   <g>
+    <g>
+     <rect class="fil3" x="1598" y="1839" width="5146" height="5146"/>
+     <rect class="fil4" x="2113" y="6136" width="1930" height="309"/>
+    </g>
+    <path class="fil5" d="M3428 3416l1189 0c7,27 12,60 17,98 4,38 7,77 7,115 0,156 -24,303 -71,440 -48,138 -122,261 -224,369 -108,116 -238,205 -389,268 -152,63 -324,95 -519,95 -176,0 -342,-32 -497,-95 -156,-63 -292,-151 -407,-264 -115,-113 -206,-247 -274,-402 -68,-154 -102,-323 -102,-506 0,-183 34,-351 102,-506 68,-155 159,-288 274,-401 115,-113 251,-201 407,-265 155,-63 321,-94 497,-94 197,0 372,34 527,101 155,68 287,162 398,281l-315 309c-79,-84 -167,-148 -264,-192 -97,-44 -213,-66 -349,-66 -111,0 -216,20 -315,59 -99,40 -186,96 -261,168 -74,72 -133,160 -177,262 -44,103 -66,218 -66,344 0,127 22,241 66,344 44,103 103,190 179,262 76,73 163,129 263,168 99,40 205,59 318,59 129,0 237,-18 327,-56 89,-37 165,-85 228,-144 45,-40 84,-92 117,-154 33,-62 58,-131 76,-208l-762 0 0 -389z"/>
+    <polygon id="1" class="fil5" points="5020,2322 5477,2322 5477,4747 5020,4747 "/>
+    <path id="2" class="fil6 str0" d="M3428 3416l1189 0c7,27 12,60 17,98 4,38 7,77 7,115 0,156 -24,303 -71,440 -48,138 -122,261 -224,369 -108,116 -238,205 -389,268 -152,63 -324,95 -519,95 -176,0 -342,-32 -497,-95 -156,-63 -292,-151 -407,-264 -115,-113 -206,-247 -274,-402 -68,-154 -102,-323 -102,-506 0,-183 34,-351 102,-506 68,-155 159,-288 274,-401 115,-113 251,-201 407,-265 155,-63 321,-94 497,-94 197,0 372,34 527,101 155,68 287,162 398,281l-315 309c-79,-84 -167,-148 -264,-192 -97,-44 -213,-66 -349,-66 -111,0 -216,20 -315,59 -99,40 -186,96 -261,168 -74,72 -133,160 -177,262 -44,103 -66,218 -66,344 0,127 22,241 66,344 44,103 103,190 179,262 76,73 163,129 263,168 99,40 205,59 318,59 129,0 237,-18 327,-56 89,-37 165,-85 228,-144 45,-40 84,-92 117,-154 33,-62 58,-131 76,-208l-762 0 0 -389z"/>
+    <polygon id="3" class="fil6 str0" points="5020,2322 5477,2322 5477,4747 5020,4747 "/>
+   </g>
+  </g>
+ </g>
+</svg>
